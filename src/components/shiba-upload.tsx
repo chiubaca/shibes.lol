@@ -7,9 +7,8 @@ export const ShibaUpload = () => {
 
   return (
     <>
-      {error && <>{error}</>}
-
       <form
+        className="flex flex-col gap-2"
         method="POST"
         onSubmit={async (e) => {
           e.preventDefault();
@@ -24,21 +23,36 @@ export const ShibaUpload = () => {
             }
           } catch (error) {
             console.error("💩", error);
-            setError("something went badly wrong");
+            setError("for submission error");
           }
         }}
       >
         <input {...getActionProps(actions.submitShiba)} />
-        <input name="text" type="text" />
+
         <input
-          required
-          type="file"
           id="file-upload"
           name="imageFile"
           accept="image/*"
+          type="file"
+          className="file-input file-input-bordered file-input-primary w-full grow lowercase"
         />
-        <button type="submit">submit shiba</button>
+
+        <label className="input input-bordered flex items-center gap-2 w-full">
+          <input
+            type="url"
+            name="creditsUrl"
+            className="grow"
+            placeholder="credit original source (url)"
+          />
+          <span className="badge badge-ghost">optional</span>
+        </label>
+
+        <button type="submit" className="btn btn-info">
+          submit
+        </button>
       </form>
+
+      {error && <>{error}</>}
     </>
   );
 };
