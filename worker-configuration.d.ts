@@ -15,4 +15,6 @@ interface Env {
   R2_ACCOUNT_ID: string;
   R2_ACCESS_ID: string;
   R2_SECRET_KEY: string;
+
+  TERRIBLE_GATE_PASSWORD: string;
 }
