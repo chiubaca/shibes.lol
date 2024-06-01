@@ -2,7 +2,14 @@
 import LolCry from "../components/lol-cry.astro";
 import { ShibaUpload } from "../components/shiba-upload";
 
-const APP_DB = Astro.locals.runtime.env.APP_DB;
+const password = Astro.url.searchParams.get("password");
+const passwordMatched =
+  password && password === import.meta.env.TERRIBLE_GATE_PASSWORD;
+
+const IS_ALLOWED_TO_PASS_TERRIBLE_GATE = import.meta.env.DEV
+  ? true
+  : passwordMatched;
+
 
 const { user } = Astro.locals;
 ---
@@ -16,28 +23,30 @@ const { user } = Astro.locals;
     <title>shibes.lol | home of shiba pics</title>
   </head>
 
-  <body>
-    <div>
-      {
-        !user ? (
-          <div>
+  {
+    IS_ALLOWED_TO_PASS_TERRIBLE_GATE ? (
+      <body>
+        <div>
+          {!user ? (
             <div>
-              <a href="login/google"> Sign in with Google</a>
+              <div>
+                <a href="login/google"> Sign in with Google</a>
+              </div>
             </div>
-          </div>
-        ) : (
-          <>
-            <div> Hello {user.userName} </div>
-            <form method="post" action="/logout">
-              <button>Sign out</button>
-            </form>
-          </>
-        )
-      }
-    </div>
+          ) : (
+            <>
+              <div> Hello {user.userName} </div>
+              <form method="post" action="/logout">
+                <button>Sign out</button>
+              </form>
+            </>
+          )}
+        </div>
 
-    <div>{user && <ShibaUpload  client:load />}</div>
-
-    {Array.from(Array(20).keys()).map(() => <LolCry />)}
-  </body>
+        <div>{user && <ShibaUpload client:load />}</div>
+      </body>
+    ) : (
+      <LolCry />
+    )
+  }
 </html>
