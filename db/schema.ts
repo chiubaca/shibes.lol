@@ -1,16 +1,16 @@
 import { sql } from "drizzle-orm";
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
-export const message = sqliteTable("message", {
+export const shibaSubmission = sqliteTable("shiba_submission", {
   id: integer("id").primaryKey(),
   userId: text("user_id")
-    .notNull()
-    .references(() => userTable.id),
-  text: text("text").notNull(),
+    .references(() => userTable.id)
+    .notNull(),
+  creditsUrl: text("credits_url"),
   createdAt: text("timestamp")
-    .notNull()
-    .default(sql`(current_timestamp)`),
-  imageRef: text("image_ref").unique(),
+    .default(sql`(current_timestamp)`)
+    .notNull(),
+  imageRef: text("image_ref").unique().notNull(),
 });
 
 export const userTable = sqliteTable("user", {

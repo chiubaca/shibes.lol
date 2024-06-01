@@ -8,7 +8,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 type Body = PutObjectCommand["input"]["Body"];
 
-const BUCKET_NAME = 'shibes-lol-bucket'
+const BUCKET_NAME = "shibes-lol-bucket";
 
 export const bucketAccess = (env: Env) => {
   const client = new S3Client({

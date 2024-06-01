@@ -2,23 +2,24 @@ import { nanoid } from "nanoid";
 import { drizzle } from "drizzle-orm/d1";
 import { defineAction, z } from "astro:actions";
 
-import { message } from "../../db/schema";
+import { shibaSubmission } from "../../db/schema";
 import { bucketAccess } from "../lib/bucket-access";
 
-import type { Message } from "../types";
+import type { ShibaSubmission } from "../types";
 
 export const server = {
-  createMessage: defineAction({
+  submitShiba: defineAction({
     accept: "form",
     input: z.object({
-      text: z.string(),
-      imageFile: z.instanceof(File).optional(),
+      imageFile: z.instanceof(File),
+      creditsUrl: z.string().url().nullable(),
     }),
     handler: async (
       input,
       context
     ): Promise<
-      { type: "error"; message: string } | { type: "success"; data: Message }
+      | { type: "error"; message: string }
+      | { type: "success"; data: ShibaSubmission }
     > => {
       const { locals } = context;
       const user = locals.user;
@@ -49,10 +50,18 @@ export const server = {
         }
       }
 
+      if (!imageRef) {
+        throw new Error("Image ref was not generated");
+      }
+
       const db = drizzle(APP_DB);
       const resp = await db
-        .insert(message)
-        .values({ userId: user.id, text: input.text, imageRef })
+        .insert(shibaSubmission)
+        .values({
+          userId: user.id,
+          creditsUrl: input.creditsUrl,
+          imageRef: imageRef,
+        })
         .returning();
 
       return { type: "success", data: resp[0] };
