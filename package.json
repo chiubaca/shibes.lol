@@ -38,5 +38,8 @@
     "@types/node": "^20.12.12",
     "cross-env": "^7.0.3",
     "drizzle-kit": "^0.21.4"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.9.5"
   }
 }
