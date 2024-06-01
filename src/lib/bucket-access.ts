@@ -8,6 +8,8 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 type Body = PutObjectCommand["input"]["Body"];
 
+const BUCKET_NAME = 'shibes-lol-bucket'
+
 export const bucketAccess = (env: Env) => {
   const client = new S3Client({
     region: "auto",
@@ -27,7 +29,7 @@ export const bucketAccess = (env: Env) => {
 
     getObject: async (key: string) => {
       const command = new GetObjectCommand({
-        Bucket: "fullstack-astro-cloudflare-bucket",
+        Bucket: BUCKET_NAME,
         Key: key,
       });
       const { Body } = await client.send(command);
@@ -42,7 +44,7 @@ export const bucketAccess = (env: Env) => {
       const { key, body, contentType } = args;
 
       const command = new PutObjectCommand({
-        Bucket: "fullstack-astro-cloudflare-bucket",
+        Bucket: BUCKET_NAME,
         Key: key,
         Body: body,
         ContentType: contentType,
@@ -55,7 +57,7 @@ export const bucketAccess = (env: Env) => {
       return await getSignedUrl(
         client,
         new GetObjectCommand({
-          Bucket: "fullstack-astro-cloudflare-bucket",
+          Bucket: BUCKET_NAME,
           Key: key,
         }),
         { expiresIn: 3600 }

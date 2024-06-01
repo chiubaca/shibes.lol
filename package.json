@@ -1,5 +1,5 @@
 {
-  "name": "fullstack-astro-cloudflare",
+  "name": "shibes.lol",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -8,8 +8,8 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "d1:migrate:local": "wrangler d1 migrations apply fullstack-astro-cloudflare-db --local",
-    "d1:migrate:remote": "wrangler d1 migrations apply fullstack-astro-cloudflare-db --remote",
+    "d1:migrate:local": "wrangler d1 migrations apply shibes-lol-db --local",
+    "d1:migrate:remote": "wrangler d1 migrations apply shibes-lol-db --remote",
     "drizzle:generate": "drizzle-kit generate",
     "wrangler:types": "wrangler types",
     "wrangler:deploy": "astro build && wrangler pages deploy"
