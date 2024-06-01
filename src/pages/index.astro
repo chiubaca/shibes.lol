@@ -2,14 +2,14 @@
 import LolCry from "../components/lol-cry.astro";
 import { ShibaUpload } from "../components/shiba-upload";
 
+// AWFUL BASIC AUTH //
 const password = Astro.url.searchParams.get("password");
 const passwordMatched =
   password && password === Astro.locals.runtime.env.TERRIBLE_GATE_PASSWORD;
-
-const IS_ALLOWED_TO_PASS_TERRIBLE_GATE = import.meta.env.DEV
+const IS_ALLOWED_TO_PASS_TERRIBLE_GATE = import.meta.env.DEV_
   ? true
   : passwordMatched;
-
+// AWFUL BASIC AUTH //
 
 const { user } = Astro.locals;
 ---
