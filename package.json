@@ -1,0 +1,43 @@
+{
+  "name": "fullstack-astro-cloudflare",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "d1:migrate:local": "wrangler d1 migrations apply fullstack-astro-cloudflare-db --local",
+    "d1:migrate:remote": "wrangler d1 migrations apply fullstack-astro-cloudflare-db --remote",
+    "drizzle:generate": "drizzle-kit generate",
+    "wrangler:types": "wrangler types",
+    "wrangler:deploy": "astro build && wrangler pages deploy"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.7.0",
+    "@astrojs/cloudflare": "^10.2.6",
+    "@astrojs/react": "^3.4.0",
+    "@aws-sdk/client-s3": "^3.583.0",
+    "@aws-sdk/s3-request-presigner": "^3.583.0",
+    "@lucia-auth/adapter-drizzle": "^1.0.7",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@unpic/react": "^0.1.14",
+    "arctic": "^1.9.0",
+    "astro": "^4.9.1",
+    "drizzle-orm": "^0.30.10",
+    "lucia": "^3.2.0",
+    "nanoid": "^5.0.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.4.5",
+    "wrangler": "^3.57.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "better-sqlite3": "^10.0.0",
+    "cross-env": "^7.0.3",
+    "drizzle-kit": "^0.21.4"
+  }
+}
