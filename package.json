@@ -36,7 +36,6 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
-    "better-sqlite3": "^10.0.0",
     "cross-env": "^7.0.3",
     "drizzle-kit": "^0.21.4"
   }
