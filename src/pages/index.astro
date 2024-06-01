@@ -1,5 +1,9 @@
 ---
 import LolCry from "../components/lol-cry.astro";
+
+const APP_DB = Astro.locals.runtime.env.APP_DB;
+
+const { user } = Astro.locals;
 ---
 
 <html lang="en">
@@ -12,6 +16,24 @@ import LolCry from "../components/lol-cry.astro";
   </head>
 
   <body>
+    <div>
+      {
+        !user ? (
+          <div>
+            <div>
+              <a href="login/google"> Sign in with Google</a>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div> Hello {user.userName} </div>
+            <form method="post" action="/logout">
+              <button>Sign out</button>
+            </form>
+          </>
+        )
+      }
+    </div>
     {Array.from(Array(20).keys()).map(() => <LolCry />)}
   </body>
 </html>
