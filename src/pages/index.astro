@@ -3,8 +3,10 @@ import LolCry from "../components/lol-cry.astro";
 import { ShibaUpload } from "../components/shiba-upload";
 
 const password = Astro.url.searchParams.get("password");
+console.log("🚀 ~ password:", password)
 const IS_ALLOWED_TO_PASS_TERRIBLE_GATE =
   password && password === import.meta.env.TERRIBLE_GATE_PASSWORD;
+  console.log("🚀 ~ import.meta.env.TERRIBLE_GATE_PASSWORD:", import.meta.env.TERRIBLE_GATE_PASSWORD)
 
 const { user } = Astro.locals;
 ---
