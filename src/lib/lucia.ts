@@ -27,13 +27,14 @@ export function initialiseLucia(D1: D1Database) {
       },
     },
     getUserAttributes: (attributes) => {
-      const { avatarUrl, email, fullName, userName } = attributes;
+      const { avatarUrl, email, fullName, userName, role } = attributes;
 
       return {
         avatarUrl,
         userName,
         fullName,
         email,
+        role,
       };
     },
   });
@@ -44,6 +45,7 @@ interface DatabaseUserAttributes {
   userName: string;
   fullName: string;
   email: string;
+  role: "user" | "admin" | "banned";
 }
 
 declare module "lucia" {

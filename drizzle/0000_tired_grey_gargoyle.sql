@@ -22,6 +22,7 @@ CREATE TABLE `user` (
 	`user_name` text NOT NULL,
 	`full_name` text NOT NULL,
 	`email` text NOT NULL,
+	`role` text DEFAULT 'user',
 	`created_at` text DEFAULT (current_timestamp) NOT NULL
 );
 --> statement-breakpoint

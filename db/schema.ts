@@ -20,6 +20,7 @@ export const userTable = sqliteTable("user", {
   userName: text("user_name").notNull(), // The user alias or handle name
   fullName: text("full_name").notNull(), // Full name of the user
   email: text("email").notNull(),
+  role: text("role").default("user"), // user | admin | banned
   createdAt: text("created_at")
     .notNull()
     .default(sql`(current_timestamp)`),
