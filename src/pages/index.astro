@@ -3,6 +3,7 @@ import { drizzle } from "drizzle-orm/d1";
 
 import { shibaSubmission } from "../../db/schema";
 import LolCry from "../components/lol-cry.astro";
+import Navigation from "../components/navigation.astro";
 import { PictureGallery } from "../components/picture-gallery";
 import { ShibaUpload } from "../components/shiba-upload";
 
@@ -19,7 +20,6 @@ const APP_DB = Astro.locals.runtime.env.APP_DB;
 const db = drizzle(APP_DB);
 const submissions = await db.select().from(shibaSubmission);
 
-
 const { user } = Astro.locals;
 ---
 
@@ -34,7 +34,8 @@ const { user } = Astro.locals;
 
   {
     IS_ALLOWED_TO_PASS_TERRIBLE_GATE ? (
-      <body>
+      <body class="relative">
+        <Navigation user={user} />
         <div class="relative  hero min-h-screen bg-base-200">
           <div class="bg-img" />
           <div class="hero-content text-center ">
@@ -42,11 +43,11 @@ const { user } = Astro.locals;
               <h1 class="text-5xl font-bold">submit your shibas</h1>
               <p class="py-6">Lets build an archive of shiba pics together!</p>
               {!user ? (
-                <a href="login/google">Sign in with Google</a>
+                <a class="btn btn-info" href="login/google">
+                  sign in with google to contribute
+                </a>
               ) : (
-                <>
-                  <ShibaUpload client:load />
-                </>
+                <ShibaUpload client:load />
               )}
             </div>
           </div>

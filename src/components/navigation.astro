@@ -1,0 +1,71 @@
+---
+type Props = {
+  user: OAuthUser | null;
+};
+
+const { user } = Astro.props;
+
+// https://stackoverflow.com/a/5915122s
+const greetings = ["sup", "howdy", "gday", "yo"];
+const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+---
+
+<div class="navbar bg-base-100 shadow-sm fixed top-0 z-10">
+  <div class="flex-1 rainbow font-extrabold text-2xl">shibes.lol</div>
+  <div class="flex-none gap-2">
+    {
+      user ? (
+        <div class="flex flex-row items-center gap-2 lowercase">
+          <p>
+            {greeting}, {user.userName}
+          </p>
+          <div class="dropdown dropdown-end flex flex-col">
+            <div
+              tabindex="0"
+              role="button"
+              class="btn btn-ghost btn-circle avatar"
+            >
+              <div class="w-10 rounded-full flex  flex-row">
+                <img alt="your avatar" src={user.avatarUrl} />
+              </div>
+            </div>
+            <ul
+              tabindex="0"
+              class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+            >
+              <form method="post" action="/logout">
+                <button>Sign out</button>
+              </form>
+            </ul>
+          </div>
+        </div>
+      ) : (
+        <a class="btn btn-info" href="login/google">
+          sign in
+        </a>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .rainbow {
+    color: black;
+    background: linear-gradient(
+      181deg,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      purple
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+
+  .rainbow:hover {
+    color: transparent;
+    transition: 200ms ease;
+  }
+</style>
