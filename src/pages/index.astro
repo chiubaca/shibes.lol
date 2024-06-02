@@ -48,10 +48,31 @@ const { user } = Astro.locals;
           <div class="bg-img" />
           <div class="hero-content text-center ">
             <div class="max-w-md">
-              <h1 class="text-5xl font-bold">submit your shibas</h1>
-              <p class="pt-6">Lets build an archive of shiba pics together!</p>
+              <h1 class="text-5xl font-semibold">submit your shibas</h1>
+              <p class="pt-6">
+                🙏{" "}
+                <a
+                  class="text-blue-600 dark:text-blue-500 hover:underlines"
+                  href="https://twitter.com/ShibaEveryHour"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  @ShibaEveryhour
+                </a>{" "}
+                needs your help to build a new archive of shibas!
+                <a
+                  class="text-blue-600 dark:text-blue-500 hover:underlines"
+                  href="https://twitter.com/chiubaca/status/1795816063835541854"
+                >
+                  More info here...
+                </a>
+                🙏
+              </p>
+              <p class="pt-2">
+                This collection will be used to keep ShibaEveryHour running!
+              </p>
               <p class=" mt-2 mb-6 badge badge-success">
-                {submissionCount-1}+ shiba images submitted!
+                {submissionCount - 1}+ shiba images submitted!
               </p>
               {!user ? (
                 <a class="btn btn-info" href="login/google">
