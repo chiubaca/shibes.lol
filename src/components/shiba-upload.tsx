@@ -35,7 +35,7 @@ export const ShibaUpload = () => {
         <input
           id="file-upload"
           name="imageFile"
-          accept="image/*"
+          accept=".png,.jpg,.jpeg,.webp"
           type="file"
           className="file-input file-input-bordered file-input-primary w-full grow lowercase"
         />
