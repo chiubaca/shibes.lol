@@ -13,7 +13,7 @@ export const ShibaUpload = () => {
         onSubmit={async (e) => {
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
-
+          window.location.hash = "";
           try {
             const resp = await actions.submitShiba(formData);
 
@@ -21,6 +21,9 @@ export const ShibaUpload = () => {
               setError(resp.message);
               return;
             }
+
+            window.location.hash = "#gallery";
+            window.location.reload();
           } catch (error) {
             console.error("💩", error);
             setError("for submission error");

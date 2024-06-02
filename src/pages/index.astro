@@ -1,5 +1,6 @@
 ---
 import { drizzle } from "drizzle-orm/d1";
+import { asc, desc } from "drizzle-orm";
 
 import { shibaSubmission } from "../../db/schema";
 import LolCry from "../components/lol-cry.astro";
@@ -18,7 +19,12 @@ const IS_ALLOWED_TO_PASS_TERRIBLE_GATE = import.meta.env.DEV
 
 const APP_DB = Astro.locals.runtime.env.APP_DB;
 const db = drizzle(APP_DB);
-const submissions = await db.select().from(shibaSubmission);
+const submissions = await db
+  .select()
+  .from(shibaSubmission)
+  .limit(100)
+  .orderBy(desc(shibaSubmission.createdAt));
+
 
 const { user } = Astro.locals;
 ---
@@ -68,6 +74,9 @@ const { user } = Astro.locals;
 </html>
 
 <style>
+  #gallery {
+    scroll-margin-top: 65px;
+  }
   .bg-img {
     background-image: url("/bg.jpg");
     opacity: 25%;
