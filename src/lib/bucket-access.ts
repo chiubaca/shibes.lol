@@ -40,14 +40,16 @@ export const bucketAccess = (env: Env) => {
       key: string;
       body: Body;
       contentType: string;
+      metaData?: Record<string, string> 
     }) => {
-      const { key, body, contentType } = args;
+      const { key, body, contentType, metaData } = args;
 
       const command = new PutObjectCommand({
         Bucket: BUCKET_NAME,
         Key: key,
         Body: body,
         ContentType: contentType,
+        Metadata:metaData
       });
       const response = await client.send(command);
       return response;

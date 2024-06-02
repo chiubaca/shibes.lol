@@ -6,8 +6,7 @@ export const shibaSubmission = sqliteTable("shiba_submission", {
   userId: text("user_id")
     .references(() => userTable.id)
     .notNull(),
-  creditsUrl: text("credits_url"),
-  createdAt: text("timestamp")
+  createdAt: text("created_at")
     .default(sql`(current_timestamp)`)
     .notNull(),
   imageRef: text("image_ref").unique().notNull(),
@@ -21,7 +20,7 @@ export const userTable = sqliteTable("user", {
   userName: text("user_name").notNull(), // The user alias or handle name
   fullName: text("full_name").notNull(), // Full name of the user
   email: text("email").notNull(),
-  createdAt: text("timestamp")
+  createdAt: text("created_at")
     .notNull()
     .default(sql`(current_timestamp)`),
 });
@@ -32,7 +31,7 @@ export const sessionTable = sqliteTable("session", {
     .notNull()
     .references(() => userTable.id),
   expiresAt: integer("expires_at").notNull(),
-  createdAt: text("timestamp")
+  createdAt: text("created_at")
     .notNull()
     .default(sql`(current_timestamp)`),
 });

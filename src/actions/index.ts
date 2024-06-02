@@ -37,12 +37,16 @@ export const server = {
 
         try {
           const fileBuffer = await input.imageFile.arrayBuffer();
-          imageRef = nanoid(10) + "_" + input.imageFile.name;
+          imageRef = nanoid(20);
 
           await putObject({
             key: imageRef,
             body: fileBuffer as any,
             contentType: input.imageFile.type,
+            metaData: {
+              originalFileName: input.imageFile.name,
+              source: input.creditsUrl || "unknown",
+            },
           });
         } catch (error) {
           console.error("Unhandled error uploading image to bucket", error);
@@ -59,7 +63,6 @@ export const server = {
         .insert(shibaSubmission)
         .values({
           userId: user.id,
-          creditsUrl: input.creditsUrl,
           imageRef: imageRef,
         })
         .returning();

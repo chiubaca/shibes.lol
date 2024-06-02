@@ -3,5 +3,4 @@ export type ShibaSubmission = {
   userId: string;
   createdAt: string;
   imageRef: string | null;
-  creditsUrl: string | null;
 };
