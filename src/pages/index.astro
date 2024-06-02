@@ -12,7 +12,7 @@ import { ShibaUpload } from "../components/shiba-upload";
 const password = Astro.url.searchParams.get("password");
 const passwordMatched =
   password && password === Astro.locals.runtime.env.TERRIBLE_GATE_PASSWORD;
-const IS_ALLOWED_TO_PASS_TERRIBLE_GATE = import.meta.env.DEV
+const IS_ALLOWED_TO_PASS_TERRIBLE_GATE = import.meta.env.PROD
   ? true
   : passwordMatched;
 // AWFUL BASIC AUTH //
