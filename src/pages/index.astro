@@ -1,6 +1,6 @@
 ---
 import { drizzle } from "drizzle-orm/d1";
-import { asc, desc } from "drizzle-orm";
+import { desc, count } from "drizzle-orm";
 
 import { shibaSubmission } from "../../db/schema";
 import LolCry from "../components/lol-cry.astro";
@@ -25,7 +25,9 @@ const submissions = await db
   .limit(100)
   .orderBy(desc(shibaSubmission.createdAt));
 
-
+const submissionCount = (
+  await db.select({ count: count() }).from(shibaSubmission)
+)[0].count;
 const { user } = Astro.locals;
 ---
 
@@ -47,7 +49,10 @@ const { user } = Astro.locals;
           <div class="hero-content text-center ">
             <div class="max-w-md">
               <h1 class="text-5xl font-bold">submit your shibas</h1>
-              <p class="py-6">Lets build an archive of shiba pics together!</p>
+              <p class="pt-6">Lets build an archive of shiba pics together!</p>
+              <p class=" mt-2 mb-6 badge badge-success">
+                {submissionCount-1}+ shiba images submitted!
+              </p>
               {!user ? (
                 <a class="btn btn-info" href="login/google">
                   sign in with google to contribute
@@ -60,7 +65,9 @@ const { user } = Astro.locals;
         </div>
 
         <div class="">
-          <h1 id="gallery"> Community Submissions</h1>
+          <h1 id="gallery" class="text-4xl font-bold text-center w-full my-20">
+            🎉 community submissions 🎉
+          </h1>
           <PictureGallery
             imgRefs={submissions.map((s) => s.imageRef)}
             client:load
