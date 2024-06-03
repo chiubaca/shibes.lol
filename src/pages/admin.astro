@@ -9,7 +9,9 @@ const { user } = Astro.locals;
 
 const isAdmin = user?.role === "admin";
 
-if (!isAdmin) return;
+if (!isAdmin) {
+  Astro.redirect("/");
+}
 
 const APP_DB = Astro.locals.runtime.env.APP_DB;
 const db = drizzle(APP_DB);
@@ -25,7 +27,6 @@ const submissions = await db
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
-    {!isAdmin && <meta http-equiv="refresh" content="0;url=/" />}
     <meta name="robots" content="noindex, nofollow" />
     <title>🤫</title>
   </head>

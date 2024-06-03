@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 import { drizzle } from "drizzle-orm/d1";
 import { defineAction, z } from "astro:actions";
 
-import { shibaSubmission } from "../../db/schema";
+import { shibaSubmission, userTable } from "../../db/schema";
 import { bucketAccess } from "../lib/bucket-access";
 
 import type { ShibaSubmission } from "../types";
@@ -96,6 +96,38 @@ export const server = {
       });
 
       return { type: "success" };
+    },
+  }),
+
+  banUser: defineAction({
+    accept: "json",
+    input: z.object({
+      userId: z.string(),
+    }),
+    handler: async (input, context) => {
+      const user = context.locals.user;
+
+      if (user?.role !== "admin") {
+        console.warn("you are not authorized to perform this action");
+        return { type: "error" };
+      }
+
+      const APP_DB = context.locals.runtime.env.APP_DB;
+      const db = drizzle(APP_DB);
+
+      try {
+        await db
+          .update(userTable)
+          .set({
+            role: "banned",
+          })
+          .where(eq(userTable.id, input.userId));
+
+        return { type: "success" };
+      } catch (error) {
+        console.warn(`Error banning user ${input.userId}`, error);
+        return { type: "error" };
+      }
     },
   }),
 };

@@ -43,6 +43,17 @@ const ImageBox: React.FC<{ submission: Submission }> = ({ submission }) => {
     }
   };
 
+  const handleBanUser = async (args: { userId: string }) => {
+    const resp = await actions.banUser({
+      userId: args.userId,
+    });
+
+    if (resp.type === "success") {
+      alert(`${args.userId} banned`);
+      return;
+    }
+  };
+
   return (
     <div key={submission.id} className="flex items-center border">
       <div>{removeState}</div>
@@ -54,7 +65,12 @@ const ImageBox: React.FC<{ submission: Submission }> = ({ submission }) => {
           background="auto"
         />
         <p>Submitted by {submission.userId}</p>
-        <button className="btn bg-orange-400">🙅 Ban</button>
+        <button
+          className="btn bg-orange-400"
+          onClick={() => handleBanUser({ userId: submission.userId })}
+        >
+          🙅 Ban
+        </button>
       </div>
 
       <button
