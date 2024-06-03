@@ -6,6 +6,7 @@ import { shibaSubmission } from "../../db/schema";
 import { bucketAccess } from "../lib/bucket-access";
 
 import type { ShibaSubmission } from "../types";
+import { eq } from "drizzle-orm";
 
 export const server = {
   submitShiba: defineAction({
@@ -68,6 +69,33 @@ export const server = {
         .returning();
 
       return { type: "success", data: resp[0] };
+    },
+  }),
+
+  removeShiba: defineAction({
+    accept: "json",
+    input: z.object({
+      id: z.number(),
+      imgRef: z.string(),
+    }),
+    handler: async (input, context) => {
+      const user = context.locals.user;
+
+      if (user?.role !== "admin") {
+        console.warn("you are not authorised to perform this action");
+        return { type: "error" };
+      }
+
+      const APP_DB = context.locals.runtime.env.APP_DB;
+      const db = drizzle(APP_DB);
+
+      await db.delete(shibaSubmission).where(eq(shibaSubmission.id, input.id));
+      const { deleteObject } = bucketAccess(context.locals.runtime.env);
+      await deleteObject({
+        key: input.imgRef,
+      });
+
+      return { type: "success" };
     },
   }),
 };

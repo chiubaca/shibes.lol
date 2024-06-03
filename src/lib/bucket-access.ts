@@ -2,6 +2,7 @@ import {
   GetObjectCommand,
   ListBucketsCommand,
   PutObjectCommand,
+  DeleteObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
@@ -40,7 +41,7 @@ export const bucketAccess = (env: Env) => {
       key: string;
       body: Body;
       contentType: string;
-      metaData?: Record<string, string> 
+      metaData?: Record<string, string>;
     }) => {
       const { key, body, contentType, metaData } = args;
 
@@ -49,7 +50,17 @@ export const bucketAccess = (env: Env) => {
         Key: key,
         Body: body,
         ContentType: contentType,
-        Metadata:metaData
+        Metadata: metaData,
+      });
+      const response = await client.send(command);
+      return response;
+    },
+
+    deleteObject: async (args: { key: string }) => {
+      const { key } = args;
+      const command = new DeleteObjectCommand({
+        Bucket: BUCKET_NAME,
+        Key: key,
       });
       const response = await client.send(command);
       return response;

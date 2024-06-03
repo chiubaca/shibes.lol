@@ -1,7 +1,23 @@
 ---
+import { drizzle } from "drizzle-orm/d1";
+import { desc, count } from "drizzle-orm";
+
+import { shibaSubmission } from "../../db/schema";
+import { AdminPictureGallery } from "../components/admin-picture-gallery";
+
 const { user } = Astro.locals;
 
 const isAdmin = user?.role === "admin";
+
+if (!isAdmin) return;
+
+const APP_DB = Astro.locals.runtime.env.APP_DB;
+const db = drizzle(APP_DB);
+
+const submissions = await db
+  .select()
+  .from(shibaSubmission)
+  .orderBy(desc(shibaSubmission.createdAt));
 ---
 
 <html lang="en">
@@ -14,5 +30,18 @@ const isAdmin = user?.role === "admin";
     <title>🤫</title>
   </head>
 
-  {!isAdmin ? <div>unauthroised</div> : <div> show shibes</div>}
+  {
+    !isAdmin ? (
+      <div>unauthroised</div>
+    ) : (
+      <AdminPictureGallery
+        submissions={submissions.map((s) => ({
+          id: s.id,
+          imageRef: s.imageRef,
+          userId: s.userId,
+        }))}
+        client:load
+      />
+    )
+  }
 </html>
