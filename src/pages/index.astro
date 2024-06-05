@@ -108,7 +108,7 @@ const { user } = Astro.locals;
                   </p>
                 </div>
               ) : (
-                <ShibaUpload client:load />
+                <ShibaUpload client:load user={user} />
               )}
             </div>
           </div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { actions, getActionProps } from "astro:actions";
 
-export const ShibaUpload = () => {
+export const ShibaUpload: React.FC<{ user: OAuthUser | null }> = ({ user }) => {
   const [error, setError] = useState<string>("");
 
   return (
@@ -33,6 +33,7 @@ export const ShibaUpload = () => {
         <input {...getActionProps(actions.submitShiba)} />
 
         <input
+          required
           id="file-upload"
           name="imageFile"
           accept=".png,.jpg,.jpeg,.webp"
@@ -50,9 +51,36 @@ export const ShibaUpload = () => {
           <span className="badge badge-ghost">optional</span>
         </label>
 
-        <button type="submit" className="btn btn-info">
+        <button
+          disabled={user?.role === "banned"}
+          type="submit"
+          className="btn btn-info"
+        >
           submit
         </button>
+        {user?.role === "banned" && (
+          <div className="text-red-800">
+            you've been banned from posting.
+            <a
+              href="/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link hover:link-hover"
+            >
+              did you do break ours terms
+            </a>
+            ?{" "}
+            <a
+              href="https://twitter.com/chiubaca"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link hover:link-hover"
+            >
+              contact me
+            </a>{" "}
+            if you think is is an error.
+          </div>
+        )}
       </form>
 
       {error && <>{error}</>}
