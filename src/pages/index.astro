@@ -50,10 +50,10 @@ const { user } = Astro.locals;
             <div class="max-w-md">
               <h1 class="text-5xl font-semibold">submit your shibas</h1>
               <span class="flex justify-center items-center">
-                <span> 🙏</span>
+                <span>🙏</span>
                 <p class="pt-6">
                   <a
-                    class="text-blue-600 dark:text-blue-500 hover:underlines"
+                    class="link"
                     href="https://twitter.com/ShibaEveryHour"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -62,13 +62,14 @@ const { user } = Astro.locals;
                   </a>{" "}
                   needs your help to build a new archive of shibas!
                   <a
-                    class="text-blue-600 dark:text-blue-500 hover:underlines"
+                    class="link hover:link-hover"
                     href="https://twitter.com/chiubaca/status/1795816063835541854"
                   >
-                    More info here...
+                    More info here
                   </a>
+                  ...
                 </p>
-                <span> 🙏</span>
+                <span>🙏</span>
               </span>
               <p class="pt-2">
                 This collection will be used to keep ShibaEveryHour running!
@@ -84,7 +85,7 @@ const { user } = Astro.locals;
               )}
               {!user ? (
                 <div class="flex flex-col w-full border-opacity-50">
-                  <p class="pb-2">sign in to contribute</p>
+                  <p class="pb-2">sign in to contribute*</p>
                   <a class="btn btn-info" href="login/twitter">
                     x / twitter
                   </a>
@@ -92,6 +93,19 @@ const { user } = Astro.locals;
                   <a class="btn btn-info" href="login/google">
                     google
                   </a>
+
+                  <p class="text-sm pt-4 italic font-thin">
+                    *by signing up you're agree to the{" "}
+                    <a
+                      href="/terms"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="link hover:link-hover"
+                    >
+                      terms ↗
+                    </a>{" "}
+                    of this site
+                  </p>
                 </div>
               ) : (
                 <ShibaUpload client:load />
