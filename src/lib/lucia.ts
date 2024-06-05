@@ -2,7 +2,7 @@ import { Lucia } from "lucia";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
 import { drizzle } from "drizzle-orm/d1";
 import { sessionTable, userTable } from "../../db/schema";
-import { GitHub, Google } from "arctic";
+import { GitHub, Google, Twitter } from "arctic";
 
 export function initialiseGithubClient(env: Env) {
   return new GitHub(env.GITHUB_CLIENT_ID, env.GITHUB_CLIENT_SECRET);
@@ -13,6 +13,14 @@ export function initialiseGoogleClient(env: Env) {
     env.GOOGLE_CLIENT_ID,
     env.GOOGLE_CLIENT_SECRET,
     env.GOOGLE_CLIENT_REDIRECT_URL
+  );
+}
+
+export function initialiseTwitterClient(env: Env) {
+  return new Twitter(
+    env.TWITTER_CLIENT_ID,
+    env.TWITTER_CLIENT_SECRET,
+    env.TWITTER_CLIENT_REDIRECT_URL
   );
 }
 

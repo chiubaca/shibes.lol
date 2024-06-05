@@ -9,6 +9,10 @@ interface Env {
   GOOGLE_CLIENT_SECRET: string;
   GOOGLE_CLIENT_REDIRECT_URL: string;
 
+  TWITTER_CLIENT_ID: string;
+  TWITTER_CLIENT_SECRET: string;
+  TWITTER_CLIENT_REDIRECT_URL: string;
+
   APP_BUCKET: R2Bucket;
   APP_DB: D1Database;
 

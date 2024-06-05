@@ -21,7 +21,7 @@ CREATE TABLE `user` (
 	`avatar_url` text,
 	`user_name` text NOT NULL,
 	`full_name` text NOT NULL,
-	`email` text NOT NULL,
+	`email` text,
 	`role` text DEFAULT 'user',
 	`created_at` text DEFAULT (current_timestamp) NOT NULL
 );
