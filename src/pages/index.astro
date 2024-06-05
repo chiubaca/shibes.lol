@@ -78,12 +78,21 @@ const { user } = Astro.locals;
                   {submissionCount - 1}+ shiba images submitted!
                 </p>
               ) : (
-                <p class=" mt-2 mb-6 badge badge-success">you can be the first to add a shiba!</p>
+                <p class=" mt-2 mb-6 badge badge-success">
+                  you can be the first to add a shiba!
+                </p>
               )}
               {!user ? (
-                <a class="btn btn-info" href="login/google">
-                  sign in with google to contribute
-                </a>
+                <div class="flex flex-col w-full border-opacity-50">
+                  <p class="pb-2">sign in to contribute</p>
+                  <a class="btn btn-info" href="login/twitter">
+                    x / twitter
+                  </a>
+                  <div class="divider">OR</div>
+                  <a class="btn btn-info" href="login/google">
+                    google
+                  </a>
+                </div>
               ) : (
                 <ShibaUpload client:load />
               )}
