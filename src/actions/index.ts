@@ -29,6 +29,14 @@ export const server = {
         return { type: "error", message: "unauthorised" };
       }
 
+      if (user.role === "banned") {
+        return {
+          type: "error",
+          message:
+            "you're banned from submitting shibas, sorry. contact https://twitter.com/chiubaca to dispute.",
+        };
+      }
+
       const APP_DB = locals.runtime.env.APP_DB;
 
       let imageRef: string | undefined;
