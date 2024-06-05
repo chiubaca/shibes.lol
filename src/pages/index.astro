@@ -13,9 +13,10 @@ import Footer from "../components/footer.astro";
 const password = Astro.url.searchParams.get("password");
 const passwordMatched =
   password && password === Astro.locals.runtime.env.TERRIBLE_GATE_PASSWORD;
-const IS_ALLOWED_TO_PASS_TERRIBLE_GATE = import.meta.env.DEV
-  ? true
-  : passwordMatched;
+// const IS_ALLOWED_TO_PASS_TERRIBLE_GATE = import.meta.env.DEV
+//   ? true
+//   : passwordMatched;
+const IS_ALLOWED_TO_PASS_TERRIBLE_GATE = true;
 // AWFUL BASIC AUTH //
 
 const APP_DB = Astro.locals.runtime.env.APP_DB;
@@ -115,7 +116,7 @@ const { user } = Astro.locals;
           </div>
         </div>
 
-        <div class="pb-10">
+        <div class="">
           <h1 id="gallery" class="text-4xl font-bold text-center w-full my-20">
             <span class="flex justify-center items-center">
               <span> 🎉</span> community submissions <span> 🎉</span>
