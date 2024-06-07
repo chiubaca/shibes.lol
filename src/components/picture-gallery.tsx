@@ -14,7 +14,7 @@ export const PictureGallery: React.FC<PictureGalleryProps> = ({
   submissions,
 }) => {
   return (
-    <div className="grid grid-cols-1 mx-auto max-w-sm pb-10 gap-5 md:max-w-lg md:grid-cols-2 lg:max-w-7xl lg:grid-cols-4">
+    <div className="grid grid-cols-1 mx-auto max-w-sm pb-32 gap-5 md:max-w-2xl md:grid-cols-2 lg:max-w-7xl lg:grid-cols-4">
       {submissions.map((submission) => {
         return (
           <div
