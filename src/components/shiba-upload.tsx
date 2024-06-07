@@ -67,7 +67,7 @@ export const ShibaUpload: React.FC<{ user: OAuthUser | null }> = ({ user }) => {
               rel="noopener noreferrer"
               className="link hover:link-hover"
             >
-              did you do break ours terms
+              did you break ours terms
             </a>
             ?{" "}
             <a
@@ -78,7 +78,7 @@ export const ShibaUpload: React.FC<{ user: OAuthUser | null }> = ({ user }) => {
             >
               contact me
             </a>{" "}
-            if you think is is an error.
+            if you think is an error.
           </div>
         )}
       </form>
