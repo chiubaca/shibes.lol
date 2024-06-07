@@ -21,4 +21,6 @@ interface Env {
   R2_SECRET_KEY: string;
 
   TERRIBLE_GATE_PASSWORD: string;
+
+  BUCKET_NAME: string;
 }

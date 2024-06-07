@@ -4,7 +4,6 @@ import { initialiseTwitterClient } from "../../../lib/lucia";
 import type { APIContext } from "astro";
 
 export async function GET(context: APIContext): Promise<Response> {
-  console.log("TWITTER INIT");
   const twitter = initialiseTwitterClient(context.locals.runtime.env);
   const state = generateState();
   const codeVerifier = generateCodeVerifier();
