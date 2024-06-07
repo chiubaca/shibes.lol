@@ -78,7 +78,7 @@ export const ShibaUpload: React.FC<{ user: OAuthUser | null }> = ({ user }) => {
             >
               contact me
             </a>{" "}
-            if you think is an error.
+            if you think  this is an error.
           </div>
         )}
       </form>
