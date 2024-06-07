@@ -9,9 +9,9 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 type Body = PutObjectCommand["input"]["Body"];
 
-const BUCKET_NAME = "shibes-lol-bucket";
-
 export const bucketAccess = (env: Env) => {
+  const BUCKET_NAME = env.BUCKET_NAME;
+
   const client = new S3Client({
     region: "auto",
     endpoint: `https://${env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
