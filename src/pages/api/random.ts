@@ -29,12 +29,12 @@ export const GET: APIRoute = async ({ request, locals }) => {
       .limit(1)
   )[0];
 
+  const imgUrl = makeImageUrl(randomShiba.imageRef, "f=auto,q=80,h=500");
+
   const RESPONSE_TYPE = new URL(request.url).searchParams.get("type");
   if (RESPONSE_TYPE === "img") {
     return new Response(
-      "<html><body><img src='" +
-        makeImageUrl(randomShiba.imageRef) +
-        "'></body></html>",
+      "<html><body><img src='" + imgUrl + "'></body></html>",
       {
         status: 200,
         headers: {
@@ -44,13 +44,10 @@ export const GET: APIRoute = async ({ request, locals }) => {
     );
   }
 
-  return new Response(
-    JSON.stringify({ img: makeImageUrl(randomShiba.imageRef) }),
-    {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  return new Response(JSON.stringify({ img: imgUrl }), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };

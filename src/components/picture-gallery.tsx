@@ -28,7 +28,9 @@ export const PictureGallery: React.FC<PictureGalleryProps> = ({
               background="auto"
             />
             <span>
-              <p className="text-sm text-gray-800">posted by {submission.userName}</p>
+              <p className="text-sm text-gray-800">
+                posted by {submission.userName}
+              </p>
               <p className="text-xs text-gray-500">{submission.date}</p>
             </span>
           </div>
