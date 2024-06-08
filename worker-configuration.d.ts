@@ -23,4 +23,6 @@ interface Env {
   TERRIBLE_GATE_PASSWORD: string;
 
   BUCKET_NAME: string;
+
+  API_SECRET: string;
 }
