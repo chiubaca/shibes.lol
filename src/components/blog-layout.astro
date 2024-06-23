@@ -1,4 +1,6 @@
 ---
+import Footer from "../components/footer.astro";
+
 const { frontmatter } = Astro.props;
 ---
 
@@ -34,16 +36,18 @@ const { frontmatter } = Astro.props;
       </p>
     </div>
 
-    <div class="mt-16 mx-5 md:mx-10">
+    <div class="mt-16 mx-5 md:mx-10 pb-16">
       <article class="prose lg:prose-xl mx-auto mt-5">
         <!-- Markdown content is injected here -->
         <slot />
       </article>
     </div>
   </main>
+  <Footer />
 </htm>
 
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"
+></script>
 
 <style>
   .rainbow {
