@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [require("daisyui")],
-	daisyui: {
-    themes: ['wireframe']
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
+  daisyui: {
+    themes: ["wireframe"],
   },
 };

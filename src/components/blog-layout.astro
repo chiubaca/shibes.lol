@@ -1,0 +1,78 @@
+---
+const { frontmatter } = Astro.props;
+---
+
+<htm lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>shibes.lol | blog | {frontmatter.title}</title>
+    <meta name="description" content="best shibe images on the internet" />
+    <meta name="author" content="Alex Chiu" />
+    <meta
+      name="keywords"
+      content="shiba, shibes, dog photos, doge, doggo, dogs"
+    />
+  </head>
+
+  <main>
+    <nav class="navbar bg-base-100 shadow-sm fixed top-0 z-10">
+      <div class="flex-1 rainbow font-extrabold text-2xl">
+        <a href="/">shibes.lol | blog</a>
+      </div>
+    </nav>
+
+    <div class="relative hreo flex flex-col gap-5 pt-32 pb-24">
+      <div class="bg-img"></div>
+      <h1 class="mx-5 text-4xl text-center font-extrabold">
+        {frontmatter.title}
+      </h1>
+      <p class="text-1xl text-center">
+        By, {frontmatter.author} | <span>{frontmatter.date}</span>
+      </p>
+    </div>
+
+    <div class="mt-16 mx-5 md:mx-10">
+      <article class="prose lg:prose-xl mx-auto mt-5">
+        <!-- Markdown content is injected here -->
+        <slot />
+      </article>
+    </div>
+  </main>
+</htm>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<style>
+  .rainbow {
+    color: black;
+    background: linear-gradient(
+      181deg,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      purple
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+
+  .rainbow:hover {
+    color: transparent;
+    transition: 200ms ease;
+  }
+  .bg-img {
+    position: absolute;
+    top: 0;
+    background-image: url("/bg.jpg");
+    opacity: 25%;
+
+    filter: blur(2px);
+    height: 100%;
+    width: 100vw;
+  }
+</style>

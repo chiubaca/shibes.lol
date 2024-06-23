@@ -37,6 +37,7 @@
     "wrangler": "^3.57.1"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13",
     "@types/node": "^20.12.12",
     "cross-env": "^7.0.3",
     "daisyui": "^4.11.1",
