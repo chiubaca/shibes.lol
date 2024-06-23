@@ -2,7 +2,7 @@
 layout: ../../components/blog-layout.astro
 title: The Future of Shiba Every Hour
 author: Alex
-date: "24 Jun 2024"
+date: "23 Jun 2024"
 description: What's next for Shiba Every Hour
 ---
 
