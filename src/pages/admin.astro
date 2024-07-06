@@ -19,6 +19,7 @@ const db = drizzle(APP_DB);
 const submissions = await db
   .select()
   .from(shibaSubmission)
+  .limit(1000)
   .orderBy(desc(shibaSubmission.createdAt));
 ---
 
