@@ -13,13 +13,21 @@ if (!isAdmin) {
   Astro.redirect("/");
 }
 
+const page = Astro.url.searchParams.get('page') || '';
+console.log("🚀 ~ page:", typeof page)
+
 const APP_DB = Astro.locals.runtime.env.APP_DB;
 const db = drizzle(APP_DB);
+
+const limit = 10
+const offset = limit * Number(page)
+console.log("🚀 ~ offset:", offset)
 
 const submissions = await db
   .select()
   .from(shibaSubmission)
-  .limit(1000)
+  .limit(limit)
+  .offset(offset)
   .orderBy(desc(shibaSubmission.createdAt));
 ---
 
