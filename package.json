@@ -15,7 +15,7 @@
     "db:pull": "drizzle-kit pull --config drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config drizzle.config.ts",
     "db:generate": "drizzle-kit generate --config drizzle.config.ts",
-    "db:auth:generate": "pnpm dlx @better-auth/cli@latest generate --output ./src/drizzle/auth-schema.ts --yes",
+    "db:auth:generate": "pnpm dlx @better-auth/cli@latest generate --output ./src/infrastructure/database/drizzle/auth-schema.ts --yes",
     "db:studio": "drizzle-kit studio --config drizzle.config.ts"
   },
   "dependencies": {
