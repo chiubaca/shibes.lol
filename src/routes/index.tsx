@@ -5,7 +5,7 @@ import { getDb } from "@/infrastructure/database/database";
 import {
 	shibaSubmission,
 	user,
-} from "@/infrastructure/database/drizzle/out/schema";
+} from "@/infrastructure/database/drizzle/schema";
 import { makeImageUrl } from "@/lib/image";
 
 const getLatestShibas = createServerFn({ method: "GET" }).handler(async () => {

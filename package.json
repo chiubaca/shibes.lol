@@ -15,7 +15,7 @@
     "db:pull": "drizzle-kit pull --config drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config drizzle.config.ts",
     "db:generate": "drizzle-kit generate --config drizzle.config.ts",
-    "db:auth:generate": "fnpm dlx @better-auth/cli@latest generate --output ./src/drizzle/auth-schema.ts --yes",
+    "db:auth:generate": "pnpm dlx @better-auth/cli@latest generate --output ./src/drizzle/auth-schema.ts --yes",
     "db:studio": "drizzle-kit studio --config drizzle.config.ts"
   },
   "dependencies": {
@@ -30,6 +30,7 @@
     "@tanstack/react-router-ssr-query": "^1.131.7",
     "@tanstack/react-start": "^1.132.0",
     "@tanstack/router-plugin": "^1.132.0",
+    "better-auth": "^1.4.10",
     "drizzle-orm": "^0.45.1",
     "lucide-react": "^0.561.0",
     "react": "^19.2.0",
