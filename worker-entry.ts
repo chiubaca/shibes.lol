@@ -5,7 +5,7 @@ import { env } from 'cloudflare:workers';
 export default createServerEntry({
   
   fetch(request) {
-		initDatabase(env.CHONK_POKER_DB);
+		initDatabase(env.SHIBES_LOL_DB);
     return handler.fetch(request)
   },
 })
