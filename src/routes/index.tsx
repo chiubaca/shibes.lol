@@ -3,7 +3,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { desc, eq } from "drizzle-orm";
 import { getDb } from "@/infrastructure/database/database";
 import {
-	shibaSubmission,
+	shibaSubmissionV2,
 	userTable,
 } from "@/infrastructure/database/drizzle/schema";
 import { signIn, signOut, useSession } from "@/lib/auth-client";
@@ -13,15 +13,15 @@ const getLatestShibas = createServerFn({ method: "GET" }).handler(async () => {
 	const db = getDb();
 	const latestShibas = await db
 		.select({
-			id: shibaSubmission.id,
-			imageRef: shibaSubmission.imageRef,
-			createdAt: shibaSubmission.createdAt,
+			id: shibaSubmissionV2.id,
+			imageRef: shibaSubmissionV2.imageRef,
+			createdAt: shibaSubmissionV2.createdAt,
 			userName: userTable.userName,
 			avatarUrl: userTable.avatarUrl,
 		})
-		.from(shibaSubmission)
-		.leftJoin(userTable, eq(shibaSubmission.userId, userTable.id))
-		.orderBy(desc(shibaSubmission.createdAt))
+		.from(shibaSubmissionV2)
+		.leftJoin(userTable, eq(shibaSubmissionV2.userId, userTable.id))
+		.orderBy(desc(shibaSubmissionV2.createdAt))
 		.limit(50);
 
 	return latestShibas;

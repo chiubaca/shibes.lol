@@ -1,10 +1,20 @@
 import { sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { userV2 } from "./auth-schema";
 
 export const shibaSubmission = sqliteTable("shiba_submission", {
 	id: integer("id").primaryKey(),
 	userId: text("user_id")
 		.references(() => userTable.id)
+		.notNull(),
+	createdAt: text("created_at").default(sql`(current_timestamp)`).notNull(),
+	imageRef: text("image_ref").unique().notNull(),
+});
+
+export const shibaSubmissionV2 = sqliteTable("shiba_submission_v2", {
+	id: integer("id").primaryKey(),
+	userId: text("user_id")
+		.references(() => userV2.id)
 		.notNull(),
 	createdAt: text("created_at").default(sql`(current_timestamp)`).notNull(),
 	imageRef: text("image_ref").unique().notNull(),
