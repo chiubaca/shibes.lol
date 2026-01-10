@@ -1,10 +1,15 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "shibes-lol",
-  "compatibility_date": "2025-09-02",
-  "compatibility_flags": ["nodejs_compat"],
-  "main": "./worker-entry.ts",
-  	"d1_databases": [
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "shibes-lol",
+	"compatibility_date": "2025-09-02",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"main": "./worker-entry.ts",
+	"observability": {
+		"enabled": true
+	},
+	"d1_databases": [
 		{
 			"database_name": "shibes_lol_db",
 			"database_id": "3b4d9d21-3011-40be-b724-f30c361df4b3",
