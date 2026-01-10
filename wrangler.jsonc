@@ -6,6 +6,7 @@
 		"nodejs_compat"
 	],
 	"main": "./worker-entry.ts",
+	"preview_urls": false,
 	"observability": {
 		"enabled": true
 	},
