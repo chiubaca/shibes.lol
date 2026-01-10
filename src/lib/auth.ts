@@ -16,7 +16,7 @@ export const auth = betterAuth({
 			verification: authSchema.verification,
 		},
 	}),
-	baseURL: process.env.BETTER_AUTH_URL,
+	baseURL: process.env.VITE_PUBLIC_BETTER_AUTH_URL,
 	socialProviders: {
 		google: {
 			clientId: process.env.GOOGLE_CLIENT_ID as string,
