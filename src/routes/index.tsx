@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { desc, eq } from "drizzle-orm";
 import { getDb } from "@/infrastructure/database/database";
@@ -57,6 +57,12 @@ function App() {
 							<span className="text-gray-400">Loading...</span>
 						) : session ? (
 							<div className="flex items-center gap-4">
+								<Link
+									to="/my-shibas"
+									className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition-colors"
+								>
+									My Shibas
+								</Link>
 								<div className="flex items-center gap-2">
 									{session.user.image && (
 										<img
