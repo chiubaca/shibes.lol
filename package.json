@@ -13,6 +13,7 @@
     "deploy": "npm run build && wrangler deploy",
     "cf-typegen": "wrangler types",
     "db:pull": "drizzle-kit pull --config drizzle.config.ts",
+    "db:push": "drizzle-kit push --config drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config drizzle.config.ts",
     "db:generate": "drizzle-kit generate --config drizzle.config.ts",
     "db:auth:generate": "pnpm dlx @better-auth/cli@latest generate --output ./src/infrastructure/database/drizzle/auth-schema.ts --yes",

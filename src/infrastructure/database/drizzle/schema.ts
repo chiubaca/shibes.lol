@@ -1,41 +1,36 @@
-import { sqliteTable, AnySQLiteColumn, integer, text, numeric, foreignKey, uniqueIndex } from "drizzle-orm/sqlite-core"
-  import { sql } from "drizzle-orm"
-
-export const d1Migrations = sqliteTable("d1_migrations", {
-	id: integer().primaryKey({ autoIncrement: true }),
-	name: text(),
-	appliedAt: numeric("applied_at").default(sql`(CURRENT_TIMESTAMP)`).notNull(),
-});
-
-export const session = sqliteTable("session", {
-	id: text().primaryKey().notNull(),
-	userId: text("user_id").notNull().references(() => user.id),
-	expiresAt: integer("expires_at").notNull(),
-	createdAt: text("created_at").default("sql`(current_timestamp)`").notNull(),
-});
+import { sql } from "drizzle-orm";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const shibaSubmission = sqliteTable("shiba_submission", {
-	id: integer().primaryKey().notNull(),
-	userId: text("user_id").notNull().references(() => user.id),
-	createdAt: text("created_at").default("sql`(current_timestamp)`").notNull(),
-	imageRef: text("image_ref").notNull(),
-},
-(table) => [
-	uniqueIndex("shiba_submission_image_ref_unique").on(table.imageRef),
-]);
+	id: integer("id").primaryKey(),
+	userId: text("user_id")
+		.references(() => userTable.id)
+		.notNull(),
+	createdAt: text("created_at").default(sql`(current_timestamp)`).notNull(),
+	imageRef: text("image_ref").unique().notNull(),
+});
 
-export const user = sqliteTable("user", {
-	id: text().primaryKey().notNull(),
-	oauthId: text("oauth_id", { length: 255 }).notNull(),
-	oauthType: text("oauth_type").notNull(),
+export const userTable = sqliteTable("user", {
+	id: text("id").notNull().primaryKey(),
+	oauthId: text("oauth_id", { length: 255 }).unique().notNull(),
+	authType: text("oauth_type", {
+		enum: ["google", "github", "twitter"],
+	}).notNull(),
 	avatarUrl: text("avatar_url"),
-	userName: text("user_name").notNull(),
-	fullName: text("full_name").notNull(),
-	email: text(),
-	role: text().default("user"),
-	createdAt: text("created_at").default("sql`(current_timestamp)`").notNull(),
-},
-(table) => [
-	uniqueIndex("user_oauth_id_unique").on(table.oauthId),
-]);
+	userName: text("user_name").notNull(), // The user alias or handle name
+	fullName: text("full_name").notNull(), // Full name of the user
+	email: text("email"),
+	role: text("role").default("user"), // user | admin | banned
+	createdAt: text("created_at").notNull().default(sql`(current_timestamp)`),
+});
 
+export const sessionTable = sqliteTable("session", {
+	id: text("id").notNull().primaryKey(),
+	userId: text("user_id")
+		.notNull()
+		.references(() => userTable.id),
+	expiresAt: integer("expires_at").notNull(),
+	createdAt: text("created_at").notNull().default(sql`(current_timestamp)`),
+});
+
+export * from "./auth-schema";

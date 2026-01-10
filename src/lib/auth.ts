@@ -4,12 +4,17 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { drizzle } from "drizzle-orm/d1";
 
-import * as schema from "@/infrastructure/database/drizzle/schema";
+import * as authSchema from "@/infrastructure/database/drizzle/auth-schema";
 
 export const auth = betterAuth({
 	database: drizzleAdapter(drizzle(env.SHIBES_LOL_DB), {
 		provider: "sqlite",
-		schema,
+		schema: {
+			user: authSchema.userV2,
+			session: authSchema.sessionV2,
+			account: authSchema.account,
+			verification: authSchema.verification,
+		},
 	}),
 	baseURL: process.env.BETTER_AUTH_URL,
 	socialProviders: {
