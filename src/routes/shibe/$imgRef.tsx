@@ -59,7 +59,7 @@ function ShibaPage() {
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center py-12">
 			<div className="max-w-4xl mx-auto px-4">
-				<ShibaCard shiba={shiba} variant="single" />
+				<ShibaCard shiba={shiba}  />
 
 				<div className="mt-8 text-center">
 					<Link
