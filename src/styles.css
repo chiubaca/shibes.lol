@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
-body {
-  @apply m-0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@plugin "daisyui" {
+	themes: all;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+@layer base {
+	html {
+		font-family:
+			"Coming Soon", "Comic Sans MS", "Comic Neue", "Chalkboard", "Marker Felt",
+			cursive;
+	}
+}
+
+@theme {
+	--font-mono: "Comic Mono", monospace;
 }
