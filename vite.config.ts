@@ -22,6 +22,9 @@ const config = defineConfig({
       },
     }),
   ],
+  server:{
+    allowedHosts: ["chiubaca-ubuntu.eel-hoki.ts.net"]
+  }
 })
 
 export default config
