@@ -1,16 +1,14 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-	themes: all;
+  themes: all;
 }
 
 @layer base {
-	html {
-		font-family:
-			"Coming Soon", "Comic Sans MS", "Comic Neue", "Chalkboard", "Marker Felt",
-			cursive;
-	}
+  html {
+    font-family: "Coming Soon", "Comic Sans MS", "Comic Neue", "Chalkboard", "Marker Felt", cursive;
+  }
 }
 
 @theme {
-	--font-mono: "Comic Mono", monospace;
+  --font-mono: "Comic Mono", monospace;
 }

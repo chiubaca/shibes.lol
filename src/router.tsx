@@ -7,22 +7,22 @@ import { routeTree } from "./routeTree.gen";
 
 // Create a new router instance
 export const getRouter = () => {
-	const rqContext = TanstackQuery.getContext();
+  const rqContext = TanstackQuery.getContext();
 
-	const router = createRouter({
-		routeTree,
-		context: {
-			...rqContext,
-		},
+  const router = createRouter({
+    routeTree,
+    context: {
+      ...rqContext,
+    },
 
-		defaultPreload: "intent",
-		scrollRestoration: true,
-	});
+    defaultPreload: "intent",
+    scrollRestoration: true,
+  });
 
-	setupRouterSsrQueryIntegration({
-		router,
-		queryClient: rqContext.queryClient,
-	});
+  setupRouterSsrQueryIntegration({
+    router,
+    queryClient: rqContext.queryClient,
+  });
 
-	return router;
+  return router;
 };
