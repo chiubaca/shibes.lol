@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-import { desc, eq } from "drizzle-orm";
+import { count, desc, eq } from "drizzle-orm";
 import { ShibaCard } from "@/components/ShibaCard";
 import { Navbar } from "@/components/Navbar";
 import { getDb } from "@/infrastructure/database/database";
@@ -30,7 +30,13 @@ const getPageData = createServerFn({ method: "GET" }).handler(async () => {
     .orderBy(desc(shibaSubmissionV2.createdAt))
     .limit(50);
 
-  return { latestShibas, session };
+  const [countResult] = await db
+    .select({ count: count(shibaSubmissionV2.id) })
+    .from(shibaSubmissionV2);
+
+  const submissionCount = countResult?.count ?? 0;
+
+  return { latestShibas, session, submissionCount };
 });
 
 export const Route = createFileRoute("/")({
@@ -39,7 +45,7 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
-  const { latestShibas, session } = Route.useLoaderData();
+  const { latestShibas, session, submissionCount } = Route.useLoaderData();
 
   const handleSignInWith = (type: "google" | "twitter") => {
     signIn.social({
@@ -53,7 +59,7 @@ function App() {
       <Navbar />
 
       <HeroSection
-        submissionCount={10000000}
+        submissionCount={submissionCount}
         isLoggedIn={!!session}
         signInWithGoogle={() => handleSignInWith("google")}
         signInWithTwitter={() => handleSignInWith("twitter")}
