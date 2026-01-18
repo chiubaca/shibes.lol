@@ -1,11 +1,4 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
   "ignorePatterns": [],
-  "experimentalTailwindcss": {
-    "stylesheet": "./src/styles.css",
-    "attributes": ["class", "className"],
-    "functions": ["clsx", "cn"],
-    "preserveDuplicates": false,
-    "preserveWhitespace": false
-  }
 }
