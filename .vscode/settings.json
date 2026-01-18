@@ -8,6 +8,24 @@
   "files.readonlyInclude": {
     "**/routeTree.gen.ts": true
   },
+  "editor.formatOnSave": true,
   "oxc.fmt.configPath": ".oxfmtrc.json",
-  "editor.formatOnSave": true
+  "[javascript]": {
+    "editor.defaultFormatter": "Oxc.oxc-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "Oxc.oxc-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "Oxc.oxc-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "Oxc.oxc-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "Oxc.oxc-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "Oxc.oxc-vscode"
+  }
 }

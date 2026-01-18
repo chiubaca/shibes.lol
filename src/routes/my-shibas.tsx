@@ -51,11 +51,13 @@ function MyShibasPage() {
 
   if (!authenticated || !session) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+      <div className="h-16 min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
         <div className="container mx-auto px-4 py-8">
           <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
             <h1 className="text-2xl font-bold text-white">Sign in to view your Shibas</h1>
-            <p className="text-gray-400">You need to be signed in to see your submitted Shibas.</p>
+            <p className="text-gray-400">
+              You need to be signed in to see your submitted Shibas.
+            </p>
             <Link
               to="/"
               className="rounded-lg bg-amber-500 px-4 py-2 text-white transition-colors hover:bg-amber-600"
