@@ -37,12 +37,12 @@ function ShibaPage() {
 
   if (!shiba) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Shiba not found</h1>
+          <h1 className="mb-4 text-2xl font-bold text-white">Shiba not found</h1>
           <a
             href="/"
-            className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors"
+            className="rounded-lg bg-amber-500 px-6 py-3 font-medium text-white transition-colors hover:bg-amber-600"
           >
             Back to Gallery
           </a>
@@ -52,16 +52,16 @@ function ShibaPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center py-12">
-      <div className="max-w-4xl mx-auto px-4">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 py-12">
+      <div className="mx-auto max-w-4xl px-4">
         <ShibaCard shiba={shiba} />
 
         <div className="mt-8 text-center">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-6 py-3 font-medium text-white transition-colors hover:bg-amber-600"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <title>Back to Gallery</title>
               <path
                 strokeLinecap="round"

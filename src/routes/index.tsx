@@ -53,7 +53,7 @@ function App() {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-8">
+      <div className="mb-8 flex items-center justify-between">
         <h1 className="text-4xl font-bold text-white">shibes.lol</h1>
         <div>
           {isPending ? (
@@ -62,7 +62,7 @@ function App() {
             <div className="flex items-center gap-4">
               <Link
                 to="/my-shibas"
-                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition-colors"
+                className="rounded-lg bg-amber-500 px-4 py-2 text-white transition-colors hover:bg-amber-600"
               >
                 My Shibas
               </Link>
@@ -71,7 +71,7 @@ function App() {
                   <img
                     src={session.user.image}
                     alt={session.user.name || "User"}
-                    className="w-8 h-8 rounded-full"
+                    className="h-8 w-8 rounded-full"
                   />
                 )}
                 <span className="text-white">{session.user.name}</span>
@@ -79,7 +79,7 @@ function App() {
               <button
                 type="button"
                 onClick={handleSignOut}
-                className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors"
+                className="rounded-lg bg-slate-700 px-4 py-2 text-white transition-colors hover:bg-slate-600"
               >
                 Sign Out
               </button>
@@ -89,9 +89,9 @@ function App() {
               <button
                 type="button"
                 onClick={handleSignInWithGoogle}
-                className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-100 text-gray-800 font-medium rounded-lg transition-colors"
+                className="flex items-center gap-2 rounded-lg bg-white px-4 py-2 font-medium text-gray-800 transition-colors hover:bg-gray-100"
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+                <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
                   <path
                     fill="currentColor"
                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -114,9 +114,9 @@ function App() {
               <button
                 type="button"
                 onClick={handleSignInWithTwitter}
-                className="flex items-center gap-2 px-4 py-2 bg-black hover:bg-gray-900 text-white font-medium rounded-lg transition-colors"
+                className="flex items-center gap-2 rounded-lg bg-black px-4 py-2 font-medium text-white transition-colors hover:bg-gray-900"
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
                 Sign in with X
@@ -128,7 +128,7 @@ function App() {
 
       <HeroSection submissionCount={10000000} />
 
-      <div className="max-w-2xl mx-auto space-y-8">
+      <div className="mx-auto max-w-2xl space-y-8">
         {shibas.map((shiba) => (
           <ShibaCard key={shiba.id} shiba={shiba} />
         ))}
@@ -150,7 +150,7 @@ const HeroSection = ({
       <div className="hero-content text-center">
         <div className="max-w-md">
           <h1 className="text-5xl font-semibold">submit your shibas</h1>
-          <span className="flex justify-center items-center">
+          <span className="flex items-center justify-center">
             <span>🙏</span>
             <p className="pt-6">
               <a
@@ -174,11 +174,11 @@ const HeroSection = ({
           </span>
           <p className="pt-2">This collection will be used to keep ShibaEveryHour running!</p>
           {submissionCount > 0 ? (
-            <p className=" mt-2 mb-6 badge badge-success">
+            <p className="mt-2 mb-6 badge badge-success">
               {submissionCount - 1}+ shiba images submitted!
             </p>
           ) : (
-            <p className=" mt-2 mb-6 badge badge-success">you can be the first to add a shiba!</p>
+            <p className="mt-2 mb-6 badge badge-success">you can be the first to add a shiba!</p>
           )}
         </div>
       </div>

@@ -25,27 +25,27 @@ export function ShibaCard({ shiba }: ShibaCardProps) {
     <Link
       to="/shibe/$imgRef"
       params={{ imgRef: shiba.imageRef }}
-      className="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+      className="block overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-lg"
     >
       <div className="p-4">
         <img
           src={makeImageUrl(shiba.imageRef)}
           alt={`Shiba submission by ${shiba.userName}`}
-          className="w-full aspect-square object-cover"
+          className="aspect-square w-full object-cover"
         />
       </div>
-      <div className="bg-white px-8 pb-8 pt-4">
-        <div className="flex items-center gap-3 mb-3">
+      <div className="bg-white px-8 pt-4 pb-8">
+        <div className="mb-3 flex items-center gap-3">
           {shiba.avatarUrl && (
             <img
               src={shiba.avatarUrl}
               alt={shiba.userName || "User"}
-              className="w-16 h-16 rounded-full border-3 border-gray-300"
+              className="h-16 w-16 rounded-full border-3 border-gray-300"
             />
           )}
           <div>
-            <p className="text-gray-800 font-bold text-xl">{shiba.userName}</p>
-            <p className="text-gray-500 text-sm">
+            <p className="text-xl font-bold text-gray-800">{shiba.userName}</p>
+            <p className="text-sm text-gray-500">
               {new Date(shiba.createdAt).toLocaleDateString("en-US", dateFormat)}
             </p>
           </div>
@@ -53,9 +53,9 @@ export function ShibaCard({ shiba }: ShibaCardProps) {
         <div className="flex items-center gap-4 text-gray-600">
           <button
             type="button"
-            className="flex items-center gap-2 hover:text-red-500 transition-colors"
+            className="flex items-center gap-2 transition-colors hover:text-red-500"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <title>Like</title>
               <path
                 strokeLinecap="round"
@@ -68,9 +68,9 @@ export function ShibaCard({ shiba }: ShibaCardProps) {
           </button>
           <button
             type="button"
-            className="flex items-center gap-2 hover:text-blue-500 transition-colors"
+            className="flex items-center gap-2 transition-colors hover:text-blue-500"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <title>Comment</title>
               <path
                 strokeLinecap="round"
@@ -83,9 +83,9 @@ export function ShibaCard({ shiba }: ShibaCardProps) {
           </button>
           <button
             type="button"
-            className="flex items-center gap-2 hover:text-green-500 transition-colors"
+            className="flex items-center gap-2 transition-colors hover:text-green-500"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <title>Share</title>
               <path
                 strokeLinecap="round"
