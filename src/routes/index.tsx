@@ -11,12 +11,12 @@ import { signIn } from "@/lib/auth-client";
 
 const getPageData = createServerFn({ method: "GET" }).handler(async () => {
   const req = getRequest();
-  const session = await auth.api.getSession({
+  const sessionPromise = auth.api.getSession({
     headers: req.headers,
   });
 
   const db = getDb();
-  const latestShibas = await db
+  const latestShibasPromise = db
     .select({
       id: shibaSubmissionV2.id,
       imageRef: shibaSubmissionV2.imageRef,
@@ -24,17 +24,22 @@ const getPageData = createServerFn({ method: "GET" }).handler(async () => {
       userName: userTable.userName,
       avatarUrl: userTable.avatarUrl,
     })
-
     .from(shibaSubmissionV2)
     .leftJoin(userTable, eq(shibaSubmissionV2.userId, userTable.id))
     .orderBy(desc(shibaSubmissionV2.createdAt))
     .limit(50);
 
-  const [countResult] = await db
+  const countPromise = db
     .select({ count: count(shibaSubmissionV2.id) })
     .from(shibaSubmissionV2);
 
-  const submissionCount = countResult?.count ?? 0;
+  const [session, latestShibas, countResult] = await Promise.all([
+    sessionPromise,
+    latestShibasPromise,
+    countPromise,
+  ]);
+
+  const submissionCount = countResult[0]?.count ?? 0;
 
   return { latestShibas, session, submissionCount };
 });
