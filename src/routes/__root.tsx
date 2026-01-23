@@ -25,11 +25,28 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       {
         title: "shibes.lol",
       },
+      {
+        name: "description",
+        content: "best shibe images on the internet",
+      },
+      {
+        name: "author",
+        content: "alex chiu",
+      },
+      {
+        name: "keywords",
+        content: "shiba, shibes, dog photos, doge, doggo, dogs",
+      },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "icon",
+        type: "image/ico",
+        href: "/favicon.ico",
       },
     ],
   }),

@@ -34,6 +34,20 @@ const getMyShibas = createServerFn({ method: "GET" }).handler(async () => {
 
 export const Route = createFileRoute("/my-shibas")({
   loader: () => getMyShibas(),
+  head: () => ({
+    meta: [
+      { title: "my shibas | shibes.lol" },
+      { name: "description", content: "view and manage your submitted shiba inu images" },
+      { property: "og:title", content: "my shibas | shibes.lol" },
+      { property: "og:description", content: "view and manage your submitted shiba inu images" },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "shibes.lol" },
+      { property: "og:url", content: "https://shibes.lol/my-shibas" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "my shibas | shibes.lol" },
+      { name: "twitter:description", content: "view and manage your submitted shiba inu images" },
+    ],
+  }),
   component: MyShibasPage,
 });
 

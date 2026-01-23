@@ -29,9 +29,7 @@ const getPageData = createServerFn({ method: "GET" }).handler(async () => {
     .orderBy(desc(shibaSubmissionV2.createdAt))
     .limit(50);
 
-  const countPromise = db
-    .select({ count: count(shibaSubmissionV2.id) })
-    .from(shibaSubmissionV2);
+  const countPromise = db.select({ count: count(shibaSubmissionV2.id) }).from(shibaSubmissionV2);
 
   const [session, latestShibas, countResult] = await Promise.all([
     sessionPromise,
@@ -46,6 +44,26 @@ const getPageData = createServerFn({ method: "GET" }).handler(async () => {
 
 export const Route = createFileRoute("/")({
   loader: () => getPageData(),
+  head: () => ({
+    meta: [
+      { title: "shibes.lol" },
+      { name: "description", content: "the definitive collection of shibes on the internet" },
+      { property: "og:title", content: "shibes.lol" },
+      {
+        property: "og:description",
+        content: "the definitive collection of shibes on the internet",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "shibes.lol" },
+      { property: "og:url", content: "https://shibes.lol" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "shibes.lol" },
+      {
+        name: "twitter:description",
+        content: "the definitive collection of shibes on the internet",
+      },
+    ],
+  }),
   component: App,
 });
 
@@ -115,9 +133,14 @@ const HeroSection = ({
 
           <p className="mb-6">
             This collection is used to keep{" "}
-            <a href="https://x.com/ShibaEveryHour" target="_blank" rel="noopener noreferrer">
+            <a
+              className="link"
+              href="https://x.com/ShibaEveryHour"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               @ShibaEveryHour
-            </a>
+            </a>{" "}
             running!
           </p>
 
