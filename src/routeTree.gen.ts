@@ -13,6 +13,7 @@ import { Route as MyShibasRouteImport } from './routes/my-shibas'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShibeImgRefRouteImport } from './routes/shibe/$imgRef'
+import { Route as ApiUploadRouteRouteImport } from './routes/api/upload/route'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const MyShibasRoute = MyShibasRouteImport.update({
@@ -35,6 +36,11 @@ const ShibeImgRefRoute = ShibeImgRefRouteImport.update({
   path: '/shibe/$imgRef',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiUploadRouteRoute = ApiUploadRouteRouteImport.update({
+  id: '/api/upload',
+  path: '/api/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/favorites': typeof FavoritesRoute
   '/my-shibas': typeof MyShibasRoute
+  '/api/upload': typeof ApiUploadRouteRoute
   '/shibe/$imgRef': typeof ShibeImgRefRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/favorites': typeof FavoritesRoute
   '/my-shibas': typeof MyShibasRoute
+  '/api/upload': typeof ApiUploadRouteRoute
   '/shibe/$imgRef': typeof ShibeImgRefRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -60,6 +68,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/favorites': typeof FavoritesRoute
   '/my-shibas': typeof MyShibasRoute
+  '/api/upload': typeof ApiUploadRouteRoute
   '/shibe/$imgRef': typeof ShibeImgRefRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -69,15 +78,23 @@ export interface FileRouteTypes {
     | '/'
     | '/favorites'
     | '/my-shibas'
+    | '/api/upload'
     | '/shibe/$imgRef'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/favorites' | '/my-shibas' | '/shibe/$imgRef' | '/api/auth/$'
+  to:
+    | '/'
+    | '/favorites'
+    | '/my-shibas'
+    | '/api/upload'
+    | '/shibe/$imgRef'
+    | '/api/auth/$'
   id:
     | '__root__'
     | '/'
     | '/favorites'
     | '/my-shibas'
+    | '/api/upload'
     | '/shibe/$imgRef'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
@@ -86,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FavoritesRoute: typeof FavoritesRoute
   MyShibasRoute: typeof MyShibasRoute
+  ApiUploadRouteRoute: typeof ApiUploadRouteRoute
   ShibeImgRefRoute: typeof ShibeImgRefRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -120,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShibeImgRefRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/upload': {
+      id: '/api/upload'
+      path: '/api/upload'
+      fullPath: '/api/upload'
+      preLoaderRoute: typeof ApiUploadRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -134,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FavoritesRoute: FavoritesRoute,
   MyShibasRoute: MyShibasRoute,
+  ApiUploadRouteRoute: ApiUploadRouteRoute,
   ShibeImgRefRoute: ShibeImgRefRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }

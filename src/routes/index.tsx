@@ -3,11 +3,13 @@ import { createServerFn } from "@tanstack/react-start";
 import { count, desc, eq } from "drizzle-orm";
 import { ShibaCard } from "@/components/ShibaCard";
 import { Navbar } from "@/components/Navbar";
+import { ImageUpload } from "@/components/ImageUpload";
 import { getDb } from "@/infrastructure/database/database";
 import { shibaSubmissionV2, userTable } from "@/infrastructure/database/drizzle/schema";
 import { getRequest } from "@tanstack/react-start/server";
 import { auth } from "@/lib/auth";
 import { signIn } from "@/lib/auth-client";
+import { useNavigate } from "@tanstack/react-router";
 
 const getPageData = createServerFn({ method: "GET" }).handler(async () => {
   const req = getRequest();
@@ -69,6 +71,7 @@ export const Route = createFileRoute("/")({
 
 function App() {
   const { latestShibas, session, submissionCount } = Route.useLoaderData();
+  const navigate = useNavigate();
 
   const handleSignInWith = (type: "google" | "twitter") => {
     signIn.social({
@@ -86,6 +89,7 @@ function App() {
         isLoggedIn={!!session}
         signInWithGoogle={() => handleSignInWith("google")}
         signInWithTwitter={() => handleSignInWith("twitter")}
+        onUploadSuccess={() => navigate({ to: "/", replace: true })}
       />
 
       <div className="mx-auto max-w-2xl space-y-8">
@@ -102,13 +106,13 @@ const HeroSection = ({
   isLoggedIn,
   signInWithGoogle,
   signInWithTwitter,
-  // user,
+  onUploadSuccess,
 }: {
   submissionCount: number;
   isLoggedIn: boolean;
   signInWithGoogle: () => void;
   signInWithTwitter: () => void;
-  // user: any;
+  onUploadSuccess?: () => void;
 }) => {
   return (
     <div className="relative hero min-h-screen bg-base-200">
@@ -177,8 +181,7 @@ const HeroSection = ({
               </p>
             </div>
           ) : (
-            // <ShibaUpload  user={user} />
-            "Upload component goes here"
+            <ImageUpload onUploadSuccess={onUploadSuccess} />
           )}
         </div>
       </div>

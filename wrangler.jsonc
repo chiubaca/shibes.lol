@@ -17,6 +17,9 @@
       "remote": true,
     },
   ],
+  "r2_buckets": [
+    { "binding": "SHIBES_R2_BUCKET", "bucket_name": "shibes-lol-bucket", "remote": true },
+  ],
   "routes": [
     {
       "pattern": "new.shibes.lol",
