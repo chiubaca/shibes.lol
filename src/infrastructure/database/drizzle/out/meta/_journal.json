@@ -15,6 +15,13 @@
       "when": 1768018422287,
       "tag": "0001_absent_puma",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1769592015634,
+      "tag": "0002_short_clea",
+      "breakpoints": true
     }
   ]
 }

@@ -14,6 +14,12 @@ export const userV2 = sqliteTable("user_v2", {
     .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
+  role: text("role", { enum: ["user", "admin", "banned"] })
+    .default("user")
+    .notNull(),
+  banned: integer("banned", { mode: "boolean" }).default(false),
+  banReason: text("ban_reason"),
+  banExpires: integer("ban_expires", { mode: "timestamp_ms" }),
 });
 
 export const sessionV2 = sqliteTable(
@@ -33,6 +39,7 @@ export const sessionV2 = sqliteTable(
     userId: text("user_id")
       .notNull()
       .references(() => userV2.id, { onDelete: "cascade" }),
+    impersonatedBy: text("impersonated_by"),
   },
   (table) => [index("session_userId_idx").on(table.userId)],
 );
@@ -85,12 +92,12 @@ export const verification = sqliteTable(
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
-export const userV2Relations = relations(userV2, ({ many }) => ({
+export const userRelations = relations(userV2, ({ many }) => ({
   sessions: many(sessionV2),
   accounts: many(account),
 }));
 
-export const sessionV2Relations = relations(sessionV2, ({ one }) => ({
+export const sessionRelations = relations(sessionV2, ({ one }) => ({
   user: one(userV2, {
     fields: [sessionV2.userId],
     references: [userV2.id],

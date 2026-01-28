@@ -3,6 +3,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { drizzle } from "drizzle-orm/d1";
+import { admin } from "better-auth/plugins";
 
 import * as authSchema from "@/infrastructure/database/drizzle/auth-schema";
 
@@ -28,6 +29,7 @@ export const auth = betterAuth({
     },
   },
   plugins: [
+    admin(),
     tanstackStartCookies(), // make sure this is the last plugin in the array
   ],
 });
