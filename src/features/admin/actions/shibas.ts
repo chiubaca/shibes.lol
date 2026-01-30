@@ -3,37 +3,44 @@ import { auth } from "@/lib/auth";
 import { getDb } from "@/infrastructure/database/database";
 import { shibaSubmissionV2 } from "@/infrastructure/database/drizzle/schema";
 import { userV2 } from "@/infrastructure/database/drizzle/auth-schema";
-import { desc, like, eq } from "drizzle-orm";
+import { desc, like, eq, or } from "drizzle-orm";
 import { z } from "zod";
+import { getRequest } from "@tanstack/react-start/server";
 
-export const getShibas = createServerFn({ method: 'GET' })
-  .handler(async () => {
+const getShibasInput = z.object({
+  search: z.string().optional(),
+  page: z.coerce.number().default(1),
+  limit: z.coerce.number().default(50),
+});
+
+export const getShibas = createServerFn({ method: "GET" })
+  .inputValidator(getShibasInput)
+  .handler(async ({ data }) => {
+    const req = getRequest();
     try {
-      // Check authentication and admin role
       const session = await auth.api.getSession({
-        headers: {},
+        headers: req.headers,
       });
 
-      if (!session?.user?.id || (session.user as any).role !== 'admin') {
+      console.log(
+        "🔍 ~ handler() callback ~ src/features/admin/actions/shibas.ts:19 ~ session:",
+        session,
+      );
+
+      if (!session) {
+        throw new Error("Unauthorised - not logged in");
+      }
+
+      if (session.user.role !== "admin") {
         throw new Error("Unauthorized - Admin access required");
       }
 
-      const input = await z.object({
-        search: z.string().optional(),
-        page: z.coerce.number().default(1),
-        limit: z.coerce.number().default(50),
-      }).parseAsync({});
-
-      const { search, page, limit } = input;
+      const { search, page, limit } = data;
       const offset = (page - 1) * limit;
 
-      console.log('STUB: Get shibas list', { search, page, limit, requestedBy: session.user.id });
-      
-      // Stubbed implementation - in real implementation would:
       const db = getDb();
-      
-      // Build query with optional search
-      const baseQuery = db
+
+      let shibasQuery = db
         .select({
           id: shibaSubmissionV2.id,
           imageRef: shibaSubmissionV2.imageRef,
@@ -45,30 +52,33 @@ export const getShibas = createServerFn({ method: 'GET' })
             email: userV2.email,
             image: userV2.image,
             role: userV2.role,
-            banned: userV2.banned
-          }
+            banned: userV2.banned,
+          },
         })
         .from(shibaSubmissionV2)
         .leftJoin(userV2, eq(shibaSubmissionV2.userId, userV2.id));
-        
-      const query = search 
-        ? baseQuery.where(like(userV2.name, `%${search}%`))
-        : baseQuery;
-      
-      const shibas = await query
+
+      if (search) {
+        shibasQuery = (shibasQuery as any).where(
+          or(like(userV2.name, `%${search}%`), like(shibaSubmissionV2.imageRef, `%${search}%`)),
+        );
+      }
+
+      const shibas = await shibasQuery
         .orderBy(desc(shibaSubmissionV2.createdAt))
         .limit(limit)
         .offset(offset);
 
-      // Get total count for pagination
-      const baseCountQuery = db
+      let countQuery = db
         .select({ count: shibaSubmissionV2.id })
         .from(shibaSubmissionV2)
         .leftJoin(userV2, eq(shibaSubmissionV2.userId, userV2.id));
-        
-      const countQuery = search 
-        ? baseCountQuery.where(like(userV2.name, `%${search}%`))
-        : baseCountQuery;
+
+      if (search) {
+        countQuery = (countQuery as any).where(
+          or(like(userV2.name, `%${search}%`), like(shibaSubmissionV2.imageRef, `%${search}%`)),
+        );
+      }
       const totalResult = await countQuery;
       const total = totalResult.length;
 
@@ -79,8 +89,8 @@ export const getShibas = createServerFn({ method: 'GET' })
           page,
           limit,
           total,
-          totalPages: Math.ceil(total / limit)
-        }
+          totalPages: Math.ceil(total / limit),
+        },
       };
     } catch (error) {
       console.error("Get shibas error:", error);
