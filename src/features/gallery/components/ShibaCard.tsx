@@ -22,10 +22,6 @@ export function ShibaCard({ shiba }: ShibaCardProps) {
     day: "numeric" as const,
   };
 
-  console.log(
-    "🔍 ~ ShibaCard ~ src/features/gallery/components/ShibaCard.tsx:36 ~ shiba.avatarUrl:",
-    shiba.avatarUrl,
-  );
   return (
     <Link
       to="/shibe/$imgRef"

@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { makeImageUrl } from "@/lib/image";
 import { Image } from "@unpic/react";
 import { banUser } from "@/features/admin/actions/ban-user";
+import { unbanUser } from "@/features/admin/actions/unban-user";
 
 interface ShibaAuthor {
   id: string;
@@ -47,13 +48,14 @@ export const ShibaManagement = ({
   const navigate = useNavigate();
   const router = useRouter();
   const banUserFn = useServerFn(banUser);
+  const unbanUserFn = useServerFn(unbanUser);
   const [selectedShiba, setSelectedShiba] = useState<string | null>(null);
   const [selectedUserToBan, setSelectedUserToBan] = useState<{ id: string; name: string } | null>(
     null,
   );
   const [localSearch, setLocalSearch] = useState(search);
   const [banReason, setBanReason] = useState("");
-  const [banningUserId, setBanningUserId] = useState<string | null>(null);
+  // const [banningUserId, setBanningUserId] = useState<string | null>(null);
 
   const handleSearchChange = (value: string) => {
     setLocalSearch(value);
@@ -99,15 +101,14 @@ export const ShibaManagement = ({
 
   const handleUnbanUser = async (userId: string) => {
     try {
-      setBanningUserId(userId);
-      const result = await banUserFn({ data: { userId, reason: "Unbanned by administrator" } });
+     
+      const result = await unbanUserFn({ data: { userId } });
+
       if (result.success) {
         router.invalidate();
       }
     } catch (error) {
       console.error("Failed to unban user:", error);
-    } finally {
-      setBanningUserId(null);
     }
   };
 
@@ -115,7 +116,7 @@ export const ShibaManagement = ({
     if (!selectedUserToBan) return;
 
     try {
-      setBanningUserId(selectedUserToBan.id);
+      // setBanningUserId(selectedUserToBan.id);
       const result = await banUserFn({
         data: { userId: selectedUserToBan.id, reason: banReason || "Banned by administrator" },
       });
@@ -128,7 +129,7 @@ export const ShibaManagement = ({
     } catch (error) {
       console.error("Failed to ban user:", error);
     } finally {
-      setBanningUserId(null);
+      // setBanningUserId(null);
     }
   };
 
