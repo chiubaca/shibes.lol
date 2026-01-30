@@ -22,6 +22,10 @@ export function ShibaCard({ shiba }: ShibaCardProps) {
     day: "numeric" as const,
   };
 
+  console.log(
+    "🔍 ~ ShibaCard ~ src/features/gallery/components/ShibaCard.tsx:36 ~ shiba.avatarUrl:",
+    shiba.avatarUrl,
+  );
   return (
     <Link
       to="/shibe/$imgRef"
@@ -35,7 +39,7 @@ export function ShibaCard({ shiba }: ShibaCardProps) {
         <div className="mb-3 flex items-center gap-3">
           {shiba.avatarUrl && (
             <img
-              src={shiba.avatarUrl}
+              src={shiba.avatarUrl || "/placeholder.jpg"}
               alt={shiba.userName || "User"}
               className="h-16 w-16 rounded-full border-3 border-gray-300"
             />
@@ -47,7 +51,7 @@ export function ShibaCard({ shiba }: ShibaCardProps) {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-4 text-gray-600">
+        {/* <div className="flex items-center gap-4 text-gray-600">
           <button
             type="button"
             className="flex items-center gap-2 transition-colors hover:text-red-500"
@@ -93,7 +97,7 @@ export function ShibaCard({ shiba }: ShibaCardProps) {
             </svg>
             <span className="text-sm font-medium">Share</span>
           </button>
-        </div>
+        </div> */}
       </div>
     </Link>
   );

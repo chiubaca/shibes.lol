@@ -28,8 +28,6 @@ export function HomeScreen({ latestShibas, session, submissionCount }: HomeScree
 
   return (
     <>
-      <Navbar />
-
       <HeroSection
         submissionCount={submissionCount}
         isLoggedIn={!!session}
