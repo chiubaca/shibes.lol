@@ -50,9 +50,9 @@ export const Navbar = () => {
                 </Link>
               </li>
               {/* Show admin link only for admin users */}
-              {(session.user as any)?.role === 'admin' && (
+              {(session.user as any)?.role === "admin" && (
                 <li>
-                  <Link to="/admin">
+                  <Link to="/admin/shibas">
                     Admin Panel
                     <span className="badge badge-warning">Admin</span>
                   </Link>

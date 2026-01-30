@@ -11,9 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MyShibasRouteImport } from './routes/my-shibas'
 import { Route as FavoritesRouteImport } from './routes/favorites'
-import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShibeImgRefRouteImport } from './routes/shibe/$imgRef'
+import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as AdminStatsRouteImport } from './routes/admin/stats'
+import { Route as AdminShibasRouteImport } from './routes/admin/shibas'
+import { Route as AdminLayoutRouteImport } from './routes/admin/layout'
 import { Route as ApiUploadRouteRouteImport } from './routes/api/upload/route'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
@@ -27,11 +30,6 @@ const FavoritesRoute = FavoritesRouteImport.update({
   path: '/favorites',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -40,6 +38,26 @@ const IndexRoute = IndexRouteImport.update({
 const ShibeImgRefRoute = ShibeImgRefRouteImport.update({
   id: '/shibe/$imgRef',
   path: '/shibe/$imgRef',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminStatsRoute = AdminStatsRouteImport.update({
+  id: '/admin/stats',
+  path: '/admin/stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminShibasRoute = AdminShibasRouteImport.update({
+  id: '/admin/shibas',
+  path: '/admin/shibas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLayoutRoute = AdminLayoutRouteImport.update({
+  id: '/admin/layout',
+  path: '/admin/layout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiUploadRouteRoute = ApiUploadRouteRouteImport.update({
@@ -55,29 +73,38 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
   '/favorites': typeof FavoritesRoute
   '/my-shibas': typeof MyShibasRoute
   '/api/upload': typeof ApiUploadRouteRoute
+  '/admin/layout': typeof AdminLayoutRoute
+  '/admin/shibas': typeof AdminShibasRoute
+  '/admin/stats': typeof AdminStatsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/shibe/$imgRef': typeof ShibeImgRefRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
   '/favorites': typeof FavoritesRoute
   '/my-shibas': typeof MyShibasRoute
   '/api/upload': typeof ApiUploadRouteRoute
+  '/admin/layout': typeof AdminLayoutRoute
+  '/admin/shibas': typeof AdminShibasRoute
+  '/admin/stats': typeof AdminStatsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/shibe/$imgRef': typeof ShibeImgRefRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
   '/favorites': typeof FavoritesRoute
   '/my-shibas': typeof MyShibasRoute
   '/api/upload': typeof ApiUploadRouteRoute
+  '/admin/layout': typeof AdminLayoutRoute
+  '/admin/shibas': typeof AdminShibasRoute
+  '/admin/stats': typeof AdminStatsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/shibe/$imgRef': typeof ShibeImgRefRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -85,38 +112,50 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/admin'
     | '/favorites'
     | '/my-shibas'
     | '/api/upload'
+    | '/admin/layout'
+    | '/admin/shibas'
+    | '/admin/stats'
+    | '/admin/users'
     | '/shibe/$imgRef'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/admin'
     | '/favorites'
     | '/my-shibas'
     | '/api/upload'
+    | '/admin/layout'
+    | '/admin/shibas'
+    | '/admin/stats'
+    | '/admin/users'
     | '/shibe/$imgRef'
     | '/api/auth/$'
   id:
     | '__root__'
     | '/'
-    | '/admin'
     | '/favorites'
     | '/my-shibas'
     | '/api/upload'
+    | '/admin/layout'
+    | '/admin/shibas'
+    | '/admin/stats'
+    | '/admin/users'
     | '/shibe/$imgRef'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
   FavoritesRoute: typeof FavoritesRoute
   MyShibasRoute: typeof MyShibasRoute
   ApiUploadRouteRoute: typeof ApiUploadRouteRoute
+  AdminLayoutRoute: typeof AdminLayoutRoute
+  AdminShibasRoute: typeof AdminShibasRoute
+  AdminStatsRoute: typeof AdminStatsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
   ShibeImgRefRoute: typeof ShibeImgRefRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -137,13 +176,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FavoritesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -156,6 +188,34 @@ declare module '@tanstack/react-router' {
       path: '/shibe/$imgRef'
       fullPath: '/shibe/$imgRef'
       preLoaderRoute: typeof ShibeImgRefRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/stats': {
+      id: '/admin/stats'
+      path: '/admin/stats'
+      fullPath: '/admin/stats'
+      preLoaderRoute: typeof AdminStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/shibas': {
+      id: '/admin/shibas'
+      path: '/admin/shibas'
+      fullPath: '/admin/shibas'
+      preLoaderRoute: typeof AdminShibasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/layout': {
+      id: '/admin/layout'
+      path: '/admin/layout'
+      fullPath: '/admin/layout'
+      preLoaderRoute: typeof AdminLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/upload': {
@@ -177,10 +237,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
   FavoritesRoute: FavoritesRoute,
   MyShibasRoute: MyShibasRoute,
   ApiUploadRouteRoute: ApiUploadRouteRoute,
+  AdminLayoutRoute: AdminLayoutRoute,
+  AdminShibasRoute: AdminShibasRoute,
+  AdminStatsRoute: AdminStatsRoute,
+  AdminUsersRoute: AdminUsersRoute,
   ShibeImgRefRoute: ShibeImgRefRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
