@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MyShibasRouteImport } from './routes/my-shibas'
 import { Route as FavoritesRouteImport } from './routes/favorites'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShibeImgRefRouteImport } from './routes/shibe/$imgRef'
 import { Route as ApiUploadRouteRouteImport } from './routes/api/upload/route'
@@ -24,6 +25,11 @@ const MyShibasRoute = MyShibasRouteImport.update({
 const FavoritesRoute = FavoritesRouteImport.update({
   id: '/favorites',
   path: '/favorites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -49,6 +55,7 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/favorites': typeof FavoritesRoute
   '/my-shibas': typeof MyShibasRoute
   '/api/upload': typeof ApiUploadRouteRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/favorites': typeof FavoritesRoute
   '/my-shibas': typeof MyShibasRoute
   '/api/upload': typeof ApiUploadRouteRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/favorites': typeof FavoritesRoute
   '/my-shibas': typeof MyShibasRoute
   '/api/upload': typeof ApiUploadRouteRoute
@@ -76,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/favorites'
     | '/my-shibas'
     | '/api/upload'
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/favorites'
     | '/my-shibas'
     | '/api/upload'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/favorites'
     | '/my-shibas'
     | '/api/upload'
@@ -101,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   FavoritesRoute: typeof FavoritesRoute
   MyShibasRoute: typeof MyShibasRoute
   ApiUploadRouteRoute: typeof ApiUploadRouteRoute
@@ -122,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/favorites'
       fullPath: '/favorites'
       preLoaderRoute: typeof FavoritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -157,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   FavoritesRoute: FavoritesRoute,
   MyShibasRoute: MyShibasRoute,
   ApiUploadRouteRoute: ApiUploadRouteRoute,

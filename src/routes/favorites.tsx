@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { FavoritesScreen } from "@/features/favorites/screens/FavoritesScreen";
 
 export const Route = createFileRoute("/favorites")({
   head: () => ({
@@ -19,10 +20,5 @@ export const Route = createFileRoute("/favorites")({
 });
 
 function FavoritesPage() {
-  return (
-    <div>
-      <h1>Favorites</h1>
-      <p>Your favorite shiba images will appear here.</p>
-    </div>
-  );
+  return <FavoritesScreen />;
 }

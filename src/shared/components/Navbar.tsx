@@ -49,6 +49,15 @@ export const Navbar = () => {
                   <span className="badge">New</span>
                 </Link>
               </li>
+              {/* Show admin link only for admin users */}
+              {(session.user as any)?.role === 'admin' && (
+                <li>
+                  <Link to="/admin">
+                    Admin Panel
+                    <span className="badge badge-warning">Admin</span>
+                  </Link>
+                </li>
+              )}
               <li>
                 <button type="button" onClick={handleSignOut}>
                   Logout
