@@ -22,11 +22,6 @@ export const getShibas = createServerFn({ method: "GET" })
         headers: req.headers,
       });
 
-      console.log(
-        "🔍 ~ handler() callback ~ src/features/admin/actions/shibas.ts:19 ~ session:",
-        session,
-      );
-
       if (!session) {
         throw new Error("Unauthorised - not logged in");
       }

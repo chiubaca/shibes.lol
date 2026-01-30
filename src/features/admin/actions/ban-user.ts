@@ -4,39 +4,42 @@ import { getDb } from "@/infrastructure/database/database";
 import { userV2 } from "@/infrastructure/database/drizzle/auth-schema";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
+import { getRequest } from "@tanstack/react-start/server";
 
-export const banUser = createServerFn({ method: 'POST' })
-  .handler(async (ctx) => {
-    const input = await z.object({
+export const banUser = createServerFn({ method: "POST" })
+  .inputValidator(
+    z.object({
       userId: z.string(),
       reason: z.string().optional(),
       expiresAt: z.string().optional(),
-    }).parseAsync(ctx.data);
+    }),
+  )
+  .handler(async ({ data }) => {
+    const { userId, expiresAt, reason } = data;
     try {
+      const req = getRequest();
       // Check authentication and admin role
       const session = await auth.api.getSession({
-        headers: {},
+        headers: req.headers,
       });
 
-      if (!session?.user?.id || (session.user as any).role !== 'admin') {
+      if (!session?.user?.id || (session.user as any).role !== "admin") {
         throw new Error("Unauthorized - Admin access required");
       }
-
-      const { userId, reason, expiresAt } = input;
 
       if (!userId) {
         throw new Error("User ID is required");
       }
 
-      console.log('STUB: Ban user', { userId, reason, expiresAt, bannedBy: session.user.id });
-      
+      console.log("STUB: Ban user", { userId, reason, expiresAt, bannedBy: session.user.id });
+
       // Stubbed implementation - in real implementation would:
       const db = getDb();
       await db
         .update(userV2)
         .set({
           banned: true,
-          banReason: reason || 'Banned by administrator',
+          banReason: reason || "Banned by administrator",
           banExpires: expiresAt ? new Date(expiresAt) : null,
         })
         .where(eq(userV2.id, userId));
@@ -49,7 +52,7 @@ export const banUser = createServerFn({ method: 'POST' })
         message: `User ${userId} banned successfully`,
         banned: true,
         reason,
-        expiresAt
+        expiresAt,
       };
     } catch (error) {
       console.error("Ban user error:", error);

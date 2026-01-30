@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useRouter } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { makeImageUrl } from "@/lib/image";
 import { Image } from "@unpic/react";
+import { banUser } from "@/features/admin/actions/ban-user";
 
 interface ShibaAuthor {
   id: string;
@@ -43,8 +45,15 @@ export const ShibaManagement = ({
   limit,
 }: ShibaManagementProps) => {
   const navigate = useNavigate();
+  const router = useRouter();
+  const banUserFn = useServerFn(banUser);
   const [selectedShiba, setSelectedShiba] = useState<string | null>(null);
+  const [selectedUserToBan, setSelectedUserToBan] = useState<{ id: string; name: string } | null>(
+    null,
+  );
   const [localSearch, setLocalSearch] = useState(search);
+  const [banReason, setBanReason] = useState("");
+  const [banningUserId, setBanningUserId] = useState<string | null>(null);
 
   const handleSearchChange = (value: string) => {
     setLocalSearch(value);
@@ -84,8 +93,43 @@ export const ShibaManagement = ({
     setSelectedShiba(null);
   };
 
-  const handleBanUser = (userId: string) => {
-    console.log("Ban user from shiba:", userId);
+  const handleBanUser = (userId: string, userName: string) => {
+    setSelectedUserToBan({ id: userId, name: userName });
+  };
+
+  const handleUnbanUser = async (userId: string) => {
+    try {
+      setBanningUserId(userId);
+      const result = await banUserFn({ data: { userId, reason: "Unbanned by administrator" } });
+      if (result.success) {
+        router.invalidate();
+      }
+    } catch (error) {
+      console.error("Failed to unban user:", error);
+    } finally {
+      setBanningUserId(null);
+    }
+  };
+
+  const confirmBanUser = async () => {
+    if (!selectedUserToBan) return;
+
+    try {
+      setBanningUserId(selectedUserToBan.id);
+      const result = await banUserFn({
+        data: { userId: selectedUserToBan.id, reason: banReason || "Banned by administrator" },
+      });
+
+      if (result.success) {
+        setSelectedUserToBan(null);
+        setBanReason("");
+        router.invalidate();
+      }
+    } catch (error) {
+      console.error("Failed to ban user:", error);
+    } finally {
+      setBanningUserId(null);
+    }
   };
 
   return (
@@ -136,6 +180,7 @@ export const ShibaManagement = ({
                   </div>
                 </div>
                 <div className="text-sm font-medium">{shiba.author?.name ?? "Unknown"}</div>
+                {shiba.author?.banned && <span className="badge badge-error badge-sm">banned</span>}
               </div>
 
               <div className="text-xs opacity-70 mb-2">
@@ -149,12 +194,32 @@ export const ShibaManagement = ({
                 >
                   Delete Image
                 </button>
-                <button
-                  className="btn btn-warning btn-sm"
-                  onClick={() => shiba.author && handleBanUser(shiba.author.id)}
-                >
-                  Ban User
-                </button>
+                {shiba.author &&
+                  (shiba.author.banned ? (
+                    <button
+                      className="btn btn-success btn-sm"
+                      onClick={() => handleUnbanUser(shiba.author!.id)}
+                      disabled={banningUserId === shiba.author!.id}
+                    >
+                      {banningUserId === shiba.author!.id ? (
+                        <span className="loading loading-spinner loading-sm"></span>
+                      ) : (
+                        "Unban User"
+                      )}
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => handleBanUser(shiba.author!.id, shiba.author!.name)}
+                      disabled={banningUserId === shiba.author!.id}
+                    >
+                      {banningUserId === shiba.author!.id ? (
+                        <span className="loading loading-spinner loading-sm"></span>
+                      ) : (
+                        "Ban User"
+                      )}
+                    </button>
+                  ))}
               </div>
             </div>
           </div>
@@ -206,6 +271,51 @@ export const ShibaManagement = ({
               </button>
               <button className="btn btn-error" onClick={() => handleDeleteShiba(selectedShiba)}>
                 Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {selectedUserToBan && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Confirm Ban User</h3>
+            <p className="py-4">
+              Are you sure you want to ban <strong>{selectedUserToBan.name}</strong>? This will
+              prevent them from accessing the platform.
+            </p>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Ban Reason (optional)</span>
+              </label>
+              <textarea
+                className="textarea textarea-bordered"
+                placeholder="Enter reason for ban..."
+                value={banReason}
+                onChange={(e) => setBanReason(e.target.value)}
+              />
+            </div>
+            <div className="modal-action">
+              <button
+                className="btn btn-ghost"
+                onClick={() => {
+                  setSelectedUserToBan(null);
+                  setBanReason("");
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                className="btn btn-warning"
+                onClick={confirmBanUser}
+                disabled={banningUserId !== null}
+              >
+                {banningUserId !== null ? (
+                  <span className="loading loading-spinner loading-sm"></span>
+                ) : (
+                  "Ban User"
+                )}
               </button>
             </div>
           </div>
