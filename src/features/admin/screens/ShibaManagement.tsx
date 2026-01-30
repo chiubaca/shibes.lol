@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { makeImageUrl } from "@/lib/image";
+import { Image } from "@unpic/react";
 
 interface ShibaAuthor {
   id: string;
@@ -118,16 +119,8 @@ export const ShibaManagement = ({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {shibas.map((shiba) => (
           <div key={shiba.id} className="card bg-base-200 shadow-xl">
-            <figure className="h-48">
-              <img
-                src={makeImageUrl(shiba.imageRef)}
-                alt={`Shiba submission by ${shiba.author?.name ?? "Unknown"}`}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src =
-                    "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
-                }}
-              />
+            <figure>
+              <Image src={makeImageUrl(shiba.imageRef)} layout="fullWidth" aspectRatio={1} />
             </figure>
             <div className="card-body p-4">
               <div className="flex items-center gap-2 mb-2">
@@ -171,11 +164,7 @@ export const ShibaManagement = ({
       {shibas.length === 0 && <div className="text-center py-12 opacity-50">No shibas found</div>}
 
       <div className="flex justify-center gap-2 mt-6">
-        <button
-          disabled={page <= 1}
-          onClick={() => handlePageChange(1)}
-          className="btn btn-sm"
-        >
+        <button disabled={page <= 1} onClick={() => handlePageChange(1)} className="btn btn-sm">
           First
         </button>
         <button

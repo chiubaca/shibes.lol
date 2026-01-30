@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { makeImageUrl } from "@/lib/image";
+import { Image } from "@unpic/react";
 
 interface ShibaData {
   id: number;
@@ -28,11 +29,7 @@ export function ShibaCard({ shiba }: ShibaCardProps) {
       className="block overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-lg"
     >
       <div className="p-4">
-        <img
-          src={makeImageUrl(shiba.imageRef)}
-          alt={`Shiba submission by ${shiba.userName}`}
-          className="aspect-square w-full object-cover"
-        />
+        <Image src={makeImageUrl(shiba.imageRef)} aspectRatio={1} layout="fullWidth" />
       </div>
       <div className="bg-white px-8 pt-4 pb-8">
         <div className="mb-3 flex items-center gap-3">
