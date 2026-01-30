@@ -1,5 +1,4 @@
 import { ShibaCard } from "@/features/gallery/components/ShibaCard";
-import { Navbar } from "@/shared/components/Navbar";
 import { ImageUpload } from "@/features/gallery/components/ImageUpload";
 import { signIn } from "@/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";
@@ -60,7 +59,7 @@ const HeroSection = ({
 }) => {
   return (
     <div className="relative hero min-h-screen bg-base-200">
-      <div className="bg-img"></div>
+      <div className="absolute inset-0 bg-[url(/bg.jpg)] bg-cover bg-center blur-[2px] opacity-45"></div>
       <div className="hero-content text-center">
         <div className="max-w-md">
           <h1 className="text-6xl font-bold leading-tight mb-8">
