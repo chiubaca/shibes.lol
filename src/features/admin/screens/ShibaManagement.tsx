@@ -173,6 +173,13 @@ export const ShibaManagement = ({
       <div className="flex justify-center gap-2 mt-6">
         <button
           disabled={page <= 1}
+          onClick={() => handlePageChange(1)}
+          className="btn btn-sm"
+        >
+          First
+        </button>
+        <button
+          disabled={page <= 1}
           onClick={() => handlePageChange(page - 1)}
           className="btn btn-sm"
         >
@@ -187,6 +194,13 @@ export const ShibaManagement = ({
           className="btn btn-sm"
         >
           Next
+        </button>
+        <button
+          disabled={page >= pagination.totalPages}
+          onClick={() => handlePageChange(pagination.totalPages)}
+          className="btn btn-sm"
+        >
+          Last
         </button>
       </div>
 
