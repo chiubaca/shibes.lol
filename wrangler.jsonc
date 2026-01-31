@@ -1,0 +1,30 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "shibes-lol",
+  "compatibility_date": "2025-09-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "./worker-entry.ts",
+  "preview_urls": false,
+  "observability": {
+    "enabled": true,
+  },
+  "d1_databases": [
+    {
+      "database_name": "shibes_lol_db",
+      "database_id": "3b4d9d21-3011-40be-b724-f30c361df4b3",
+      "binding": "SHIBES_LOL_DB",
+      "migrations_dir": "src/infrastructure/database/drizzle/out",
+      "remote": true,
+    },
+  ],
+  "r2_buckets": [
+    { "binding": "SHIBES_R2_BUCKET", "bucket_name": "shibes-lol-bucket", "remote": true },
+  ],
+  "routes": [
+    {
+      "pattern": "new.shibes.lol",
+      "zone_name": "shibes.lol",
+      "custom_domain": true,
+    },
+  ],
+}
