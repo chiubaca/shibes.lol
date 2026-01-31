@@ -68,5 +68,7 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { latestShibas, session, submissionCount } = Route.useLoaderData();
-  return <HomeScreen latestShibas={latestShibas} session={session} submissionCount={submissionCount} />;
+  return (
+    <HomeScreen latestShibas={latestShibas} session={session} submissionCount={submissionCount} />
+  );
 }

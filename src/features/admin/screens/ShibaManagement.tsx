@@ -73,9 +73,7 @@ export const ShibaManagement = ({
     },
   });
 
-  const [selectedShiba, setSelectedShiba] = useState<{ imgRef: string; dbId: number } | null>(
-    null,
-  );
+  const [selectedShiba, setSelectedShiba] = useState<{ imgRef: string; dbId: number } | null>(null);
   const [selectedUserToBan, setSelectedUserToBan] = useState<{ id: string; name: string } | null>(
     null,
   );

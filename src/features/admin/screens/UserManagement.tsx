@@ -1,68 +1,63 @@
-import { useState } from 'react'
+import { useState } from "react";
 
 // Mock data - in real implementation this would come from API
 const mockUsers = [
   {
-    id: '1',
-    name: 'John Doe',
-    email: 'john@example.com',
-    role: 'user' as const,
+    id: "1",
+    name: "John Doe",
+    email: "john@example.com",
+    role: "user" as const,
     banned: false,
-    createdAt: '2024-01-15',
-    image: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'
+    createdAt: "2024-01-15",
+    image: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
   },
   {
-    id: '2',
-    name: 'Jane Smith',
-    email: 'jane@example.com',
-    role: 'admin' as const,
+    id: "2",
+    name: "Jane Smith",
+    email: "jane@example.com",
+    role: "admin" as const,
     banned: false,
-    createdAt: '2024-01-10',
-    image: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'
+    createdAt: "2024-01-10",
+    image: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
   },
   {
-    id: '3',
-    name: 'Bad User',
-    email: 'bad@example.com',
-    role: 'user' as const,
+    id: "3",
+    name: "Bad User",
+    email: "bad@example.com",
+    role: "user" as const,
     banned: true,
-    createdAt: '2024-01-05',
-    image: 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'
-  }
-]
+    createdAt: "2024-01-05",
+    image: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp",
+  },
+];
 
 export const UserManagement = () => {
-  const [users, setUsers] = useState(mockUsers)
-  const [searchTerm, setSearchTerm] = useState('')
+  const [users, setUsers] = useState(mockUsers);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredUsers = users.filter(user => 
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
   const handleBanUser = (userId: string) => {
-    console.log('Ban user:', userId)
+    console.log("Ban user:", userId);
     // Stubbed API call
-    setUsers(users.map(user => 
-      user.id === userId ? { ...user, banned: true } : user
-    ))
-  }
+    setUsers(users.map((user) => (user.id === userId ? { ...user, banned: true } : user)));
+  };
 
   const handleUnbanUser = (userId: string) => {
-    console.log('Unban user:', userId)
+    console.log("Unban user:", userId);
     // Stubbed API call
-    setUsers(users.map(user => 
-      user.id === userId ? { ...user, banned: false } : user
-    ))
-  }
+    setUsers(users.map((user) => (user.id === userId ? { ...user, banned: false } : user)));
+  };
 
   const handleRoleChange = (userId: string, newRole: string) => {
-    console.log('Change role:', userId, newRole)
+    console.log("Change role:", userId, newRole);
     // Stubbed API call
-    setUsers(users.map(user => 
-      user.id === userId ? { ...user, role: newRole as any } : user
-    ))
-  }
+    setUsers(users.map((user) => (user.id === userId ? { ...user, role: newRole as any } : user)));
+  };
 
   return (
     <div className="bg-base-100 rounded-lg shadow-lg p-6">
@@ -105,7 +100,7 @@ export const UserManagement = () => {
                   </div>
                 </td>
                 <td>
-                  <select 
+                  <select
                     className="select select-bordered select-sm"
                     value={user.role}
                     onChange={(e) => handleRoleChange(user.id, e.target.value)}
@@ -125,14 +120,14 @@ export const UserManagement = () => {
                 <td>
                   <div className="flex gap-2">
                     {user.banned ? (
-                      <button 
+                      <button
                         className="btn btn-success btn-sm"
                         onClick={() => handleUnbanUser(user.id)}
                       >
                         Unban
                       </button>
                     ) : (
-                      <button 
+                      <button
                         className="btn btn-error btn-sm"
                         onClick={() => handleBanUser(user.id)}
                       >
@@ -147,5 +142,5 @@ export const UserManagement = () => {
         </table>
       </div>
     </div>
-  )
-}
+  );
+};

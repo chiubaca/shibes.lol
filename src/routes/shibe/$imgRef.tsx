@@ -49,6 +49,6 @@ export const Route = createFileRoute("/shibe/$imgRef")({
 function ShibaPage() {
   const allShibas = Route.useLoaderData();
   const { imgRef } = Route.useParams();
-  
+
   return <ShibaDetailScreen allShibas={allShibas} imgRef={imgRef} />;
 }
