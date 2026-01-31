@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useRouter } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
+import { useMutation } from "@tanstack/react-query";
 import { makeImageUrl } from "@/lib/image";
 import { Image } from "@unpic/react";
 import { banUser } from "@/features/admin/actions/ban-user";
@@ -47,15 +47,29 @@ export const ShibaManagement = ({
 }: ShibaManagementProps) => {
   const navigate = useNavigate();
   const router = useRouter();
-  const banUserFn = useServerFn(banUser);
-  const unbanUserFn = useServerFn(unbanUser);
+
+  const banUserMutation = useMutation({
+    mutationFn: (data: { userId: string; reason?: string }) => banUser({ data }),
+    onSuccess: () => {
+      router.invalidate();
+      setSelectedUserToBan(null);
+      setBanReason("");
+    },
+  });
+
+  const unbanUserMutation = useMutation({
+    mutationFn: (userId: string) => unbanUser({ data: { userId } }),
+    onSuccess: () => {
+      router.invalidate();
+    },
+  });
+
   const [selectedShiba, setSelectedShiba] = useState<string | null>(null);
   const [selectedUserToBan, setSelectedUserToBan] = useState<{ id: string; name: string } | null>(
     null,
   );
   const [localSearch, setLocalSearch] = useState(search);
   const [banReason, setBanReason] = useState("");
-  // const [banningUserId, setBanningUserId] = useState<string | null>(null);
 
   const handleSearchChange = (value: string) => {
     setLocalSearch(value);
@@ -99,38 +113,16 @@ export const ShibaManagement = ({
     setSelectedUserToBan({ id: userId, name: userName });
   };
 
-  const handleUnbanUser = async (userId: string) => {
-    try {
-     
-      const result = await unbanUserFn({ data: { userId } });
-
-      if (result.success) {
-        router.invalidate();
-      }
-    } catch (error) {
-      console.error("Failed to unban user:", error);
-    }
+  const handleUnbanUser = (userId: string) => {
+    unbanUserMutation.mutate(userId);
   };
 
-  const confirmBanUser = async () => {
+  const confirmBanUser = () => {
     if (!selectedUserToBan) return;
-
-    try {
-      // setBanningUserId(selectedUserToBan.id);
-      const result = await banUserFn({
-        data: { userId: selectedUserToBan.id, reason: banReason || "Banned by administrator" },
-      });
-
-      if (result.success) {
-        setSelectedUserToBan(null);
-        setBanReason("");
-        router.invalidate();
-      }
-    } catch (error) {
-      console.error("Failed to ban user:", error);
-    } finally {
-      // setBanningUserId(null);
-    }
+    banUserMutation.mutate({
+      userId: selectedUserToBan.id,
+      reason: banReason || "Banned by administrator",
+    });
   };
 
   return (
@@ -200,9 +192,9 @@ export const ShibaManagement = ({
                     <button
                       className="btn btn-success btn-sm"
                       onClick={() => handleUnbanUser(shiba.author!.id)}
-                      disabled={banningUserId === shiba.author!.id}
+                      disabled={unbanUserMutation.isPending}
                     >
-                      {banningUserId === shiba.author!.id ? (
+                      {unbanUserMutation.isPending ? (
                         <span className="loading loading-spinner loading-sm"></span>
                       ) : (
                         "Unban User"
@@ -212,9 +204,9 @@ export const ShibaManagement = ({
                     <button
                       className="btn btn-warning btn-sm"
                       onClick={() => handleBanUser(shiba.author!.id, shiba.author!.name)}
-                      disabled={banningUserId === shiba.author!.id}
+                      disabled={banUserMutation.isPending}
                     >
-                      {banningUserId === shiba.author!.id ? (
+                      {banUserMutation.isPending ? (
                         <span className="loading loading-spinner loading-sm"></span>
                       ) : (
                         "Ban User"
@@ -310,9 +302,9 @@ export const ShibaManagement = ({
               <button
                 className="btn btn-warning"
                 onClick={confirmBanUser}
-                disabled={banningUserId !== null}
+                disabled={banUserMutation.isPending}
               >
-                {banningUserId !== null ? (
+                {banUserMutation.isPending ? (
                   <span className="loading loading-spinner loading-sm"></span>
                 ) : (
                   "Ban User"
