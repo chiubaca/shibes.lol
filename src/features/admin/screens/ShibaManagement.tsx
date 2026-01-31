@@ -5,6 +5,7 @@ import { makeImageUrl } from "@/lib/image";
 import { Image } from "@unpic/react";
 import { banUser } from "@/features/admin/actions/ban-user";
 import { unbanUser } from "@/features/admin/actions/unban-user";
+import { deleteShiba } from "@/features/admin/actions/delete-shiba";
 
 interface ShibaAuthor {
   id: string;
@@ -64,7 +65,17 @@ export const ShibaManagement = ({
     },
   });
 
-  const [selectedShiba, setSelectedShiba] = useState<string | null>(null);
+  const deleteShibaMutation = useMutation({
+    mutationFn: (data: { imgRef: string; dbId: number }) => deleteShiba({ data }),
+    onSuccess: () => {
+      router.invalidate();
+      setSelectedShiba(null);
+    },
+  });
+
+  const [selectedShiba, setSelectedShiba] = useState<{ imgRef: string; dbId: number } | null>(
+    null,
+  );
   const [selectedUserToBan, setSelectedUserToBan] = useState<{ id: string; name: string } | null>(
     null,
   );
@@ -104,9 +115,8 @@ export const ShibaManagement = ({
     });
   };
 
-  const handleDeleteShiba = (shibaId: string) => {
-    console.log("Delete shiba:", shibaId);
-    setSelectedShiba(null);
+  const handleDeleteShiba = (imgRef: string, dbId: number) => {
+    setSelectedShiba({ imgRef, dbId });
   };
 
   const handleBanUser = (userId: string, userName: string) => {
@@ -177,13 +187,14 @@ export const ShibaManagement = ({
               </div>
 
               <div className="text-xs opacity-70 mb-2">
-                ID: {shiba.imageRef} • {new Date(shiba.createdAt).toLocaleDateString()}
+                Bucket image ref: {shiba.imageRef} •{" "}
+                {new Date(shiba.createdAt).toLocaleDateString()}
               </div>
 
               <div className="card-actions justify-end gap-2">
                 <button
                   className="btn btn-error btn-sm"
-                  onClick={() => handleDeleteShiba(shiba.id.toString())}
+                  onClick={() => handleDeleteShiba(shiba.imageRef, shiba.id)}
                 >
                   Delete Image
                 </button>
@@ -262,7 +273,14 @@ export const ShibaManagement = ({
               <button className="btn btn-ghost" onClick={() => setSelectedShiba(null)}>
                 Cancel
               </button>
-              <button className="btn btn-error" onClick={() => handleDeleteShiba(selectedShiba)}>
+              <button
+                className="btn btn-error"
+                onClick={() => {
+                  if (selectedShiba) {
+                    deleteShibaMutation.mutate(selectedShiba);
+                  }
+                }}
+              >
                 Delete
               </button>
             </div>
