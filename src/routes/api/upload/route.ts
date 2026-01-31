@@ -10,7 +10,6 @@ export const Route = createFileRoute("/api/upload")({
     handlers: {
       POST: async ({ request }) => {
         try {
-          // Check authentication
           const session = await auth.api.getSession({
             headers: request.headers,
           });
@@ -22,7 +21,6 @@ export const Route = createFileRoute("/api/upload")({
             });
           }
 
-          // Read form data from request
           const formData = await request.formData();
           const file = formData.get("file") as File;
 
@@ -33,7 +31,6 @@ export const Route = createFileRoute("/api/upload")({
             });
           }
 
-          // Client-side validation
           if (file.size > 5 * 1024 * 1024) {
             return new Response(JSON.stringify({ error: "File size must be less than 5MB" }), {
               status: 400,
@@ -48,37 +45,16 @@ export const Route = createFileRoute("/api/upload")({
             });
           }
 
-          // Generate unique key for the image
-          // const fileExtension = file.name.split(".").pop() || "jpg";
           const imageRef = nanoid();
-          console.log("🔍 ~ POST ~ src/routes/api/upload/route.ts:53 ~ imageRef:", imageRef);
-
-          // Get R2 bucket from environment
           const R2_BUCKET = env.SHIBES_R2_BUCKET;
-          console.log("🔍 R2_BUCKET available:", !!R2_BUCKET);
-
-          // Upload file directly to R2
           const arrayBuffer = await file.arrayBuffer();
-          console.log("🔍 File size:", arrayBuffer.byteLength, "bytes");
-          console.log("🔍 File type:", file.type);
-          console.log("🔍 Uploading with key:", imageRef);
-          
-          const obj = await R2_BUCKET.put(imageRef, arrayBuffer, {
+
+          await R2_BUCKET.put(imageRef, arrayBuffer, {
             httpMetadata: {
               contentType: file.type,
             },
           });
-          console.log("🔍 ~ POST ~ src/routes/api/upload/route.ts:61 ~ obj:", obj);
-          
-          // Verify the upload by trying to get the object
-          try {
-            const verification = await R2_BUCKET.head(imageRef);
-            console.log("🔍 Verification head:", verification);
-          } catch (verifyError) {
-            console.error("🔍 Verification failed:", verifyError);
-          }
 
-          // Save to database
           const db = getDb();
           const result = await db
             .insert(shibaSubmissionV2)

@@ -73,7 +73,7 @@ const HeroSection = ({
           </h1>
 
           {submissionCount && (
-            <p className="mb-6 badge badge-success">
+            <p className="font-mono mb-6 badge badge-success">
               {submissionCount - 1}+ shiba images submitted!
             </p>
           )}
@@ -97,7 +97,7 @@ const HeroSection = ({
               <button
                 type="button"
                 onClick={signInWithGoogle}
-                className="cursor-pointer flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2 font-medium text-gray-800 transition-colors hover:bg-gray-100"
+                className=" cursor-pointer flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2 font-medium text-gray-800 transition-colors hover:bg-gray-100"
               >
                 Sign in with Google
               </button>

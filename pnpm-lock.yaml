@@ -14,6 +14,9 @@ importers:
       '@fontsource/comic-mono':
         specifier: ^5.2.5
         version: 5.2.5
+      '@fontsource/comic-relief':
+        specifier: ^5.2.2
+        version: 5.2.2
       '@fontsource/coming-soon':
         specifier: ^5.2.8
         version: 5.2.8
@@ -980,6 +983,9 @@ packages:
 
   '@fontsource/comic-mono@5.2.5':
     resolution: {integrity: sha512-LkTanqEt2YSFors2j+VSnvJlVO5n8zDyjlQU+hz9yl30MHyRsyJfgWyrVHKfE0NjbMVlVScZ4xT5Q72oR0MyXA==}
+
+  '@fontsource/comic-relief@5.2.2':
+    resolution: {integrity: sha512-cTE1AQh4FI/IcfAc/8SB9ZIWuW6B0M9B33V58Qoz4X6TBnpO+gyv+JKeNQJm39Xna3JT2fJvAOttnDFV7IIu/w==}
 
   '@fontsource/coming-soon@5.2.8':
     resolution: {integrity: sha512-L2+CynMPwGjrwXq0x77IN2SOXpeuLp6wFzmSp1KxY59+hZhspiHLN7MDRKRXS1LccYLhtDk1gO40j1bpdgX1PQ==}
@@ -3628,6 +3634,8 @@ snapshots:
   '@exodus/bytes@1.8.0': {}
 
   '@fontsource/comic-mono@5.2.5': {}
+
+  '@fontsource/comic-relief@5.2.2': {}
 
   '@fontsource/coming-soon@5.2.8': {}
 

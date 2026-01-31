@@ -22,7 +22,7 @@
   ],
   "routes": [
     {
-      "pattern": "new.shibes.lol",
+      "pattern": "shibes.lol",
       "zone_name": "shibes.lol",
       "custom_domain": true,
     },

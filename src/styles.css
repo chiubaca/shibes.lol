@@ -5,10 +5,11 @@
 
 @layer base {
   html {
-    font-family: "Coming Soon", "Comic Sans MS", "Comic Neue", "Chalkboard", "Marker Felt", cursive;
+    font-family: "Comic Relief", "Comic Sans MS", system-ui;
   }
 }
 
 @theme {
+  --default-font-family: "Comic Mono", system-ui;
   --font-mono: "Comic Mono", monospace;
 }
