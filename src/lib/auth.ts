@@ -29,7 +29,10 @@ export const auth = betterAuth({
     },
   },
   plugins: [
-    admin(),
+    admin({
+      bannedUserMessage:
+        "Your account has been banned. Please contact alexchiu11@gmail.com to dispute this decision.",
+    }),
     tanstackStartCookies(), // make sure this is the last plugin in the array
   ],
 });
