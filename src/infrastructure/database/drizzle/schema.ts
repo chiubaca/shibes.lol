@@ -22,6 +22,8 @@ export const shibaSubmissionV2 = sqliteTable("shiba_submission_v2", {
     .default(sql`(current_timestamp)`)
     .notNull(),
   imageRef: text("image_ref").unique().notNull(),
+  imageWidth: integer("image_width"),
+  imageHeight: integer("image_height"),
 });
 
 export const userTable = sqliteTable("user", {
