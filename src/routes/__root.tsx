@@ -1,4 +1,4 @@
-import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
+import { HeadContent, Scripts, createRootRouteWithContext, Link } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
@@ -61,9 +61,22 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="min-h-screen flex flex-col">
         <Navbar />
-        {children}
+        <main className="flex-1">{children}</main>
+        <footer className="footer footer-center p-4 bg-base-200 text-base-content mt-auto">
+          <div className="flex flex-col sm:flex-row gap-4 text-sm">
+            <p>footer lol |</p>
+            <Link to="/privacy" className="link link-hover hover:text-primary transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="hidden sm:inline">|</span>
+            <Link to="/terms" className="link link-hover hover:text-primary transition-colors">
+              Terms of Service
+            </Link>
+          </div>
+          <p className="text-xs opacity-60">© 2025 shibes.lol</p>
+        </footer>
         <TanStackDevtools
           config={{
             position: "bottom-right",

@@ -1,7 +1,5 @@
 @import "tailwindcss";
-@import "@fontsource/comic-relief";
-@import "@fontsource/comic-mono";
-
+@plugin "@tailwindcss/typography";
 @plugin "daisyui" {
   themes: all;
 }
