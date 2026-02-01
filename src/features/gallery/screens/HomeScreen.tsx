@@ -22,12 +22,12 @@ interface HomeScreenProps {
 
 export function HomeScreen({ latestShibas, session, submissionCount }: HomeScreenProps) {
   const navigate = useNavigate();
-  const { ref, inView } = useInView();
+  const { ref, inView } = useInView({
+    rootMargin: "200px",
+  });
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useShibas();
 
-  const allShibas = data
-    ? data.pages.flatMap((page) => page.shibas)
-    : latestShibas;
+  const allShibas = data ? data.pages.flatMap((page) => page.shibas) : latestShibas;
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -59,9 +59,7 @@ export function HomeScreen({ latestShibas, session, submissionCount }: HomeScree
       </div>
 
       <div ref={ref} className="flex justify-center pb-8">
-        {isFetchingNextPage && (
-          <span className="loading loading-spinner loading-lg text-primary" />
-        )}
+        {isFetchingNextPage && <span className="loading loading-spinner loading-lg text-primary" />}
         {!hasNextPage && allShibas.length > 0 && (
           <span className="text-base-content/50">No more shibas!</span>
         )}
