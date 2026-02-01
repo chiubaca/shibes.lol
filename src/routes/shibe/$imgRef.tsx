@@ -12,6 +12,8 @@ const getAllShibas = createServerFn({ method: "GET" }).handler(async () => {
     .select({
       id: shibaSubmissionV2.id,
       imageRef: shibaSubmissionV2.imageRef,
+      imageWidth: shibaSubmissionV2.imageWidth,
+      imageHeight: shibaSubmissionV2.imageHeight,
       createdAt: shibaSubmissionV2.createdAt,
       userName: userTable.userName,
       avatarUrl: userTable.avatarUrl,

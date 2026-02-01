@@ -1,7 +1,10 @@
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import { ShibaCard } from "@/features/gallery/components/ShibaCard";
 import { ImageUpload } from "@/features/gallery/components/ImageUpload";
 import { signIn } from "@/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";
+import { useShibas } from "@/features/gallery/hooks/use-shibas";
 
 interface HomeScreenProps {
   latestShibas: Array<{
@@ -19,6 +22,18 @@ interface HomeScreenProps {
 
 export function HomeScreen({ latestShibas, session, submissionCount }: HomeScreenProps) {
   const navigate = useNavigate();
+  const { ref, inView } = useInView();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useShibas();
+
+  const allShibas = data
+    ? data.pages.flatMap((page) => page.shibas)
+    : latestShibas;
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const handleSignInWith = (type: "google" | "twitter") => {
     signIn.social({
@@ -37,10 +52,19 @@ export function HomeScreen({ latestShibas, session, submissionCount }: HomeScree
         onUploadSuccess={() => navigate({ to: "/", replace: true })}
       />
 
-      <div className="mx-auto columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4 px-4">
-        {latestShibas.map((shiba) => (
-          <ShibaCard key={shiba.id} shiba={shiba} />
+      <div className="mx-auto columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4 px-4 pb-8">
+        {allShibas.map((shiba) => (
+          <ShibaCard key={`${shiba.id}-${shiba.imageRef}`} shiba={shiba} />
         ))}
+      </div>
+
+      <div ref={ref} className="flex justify-center pb-8">
+        {isFetchingNextPage && (
+          <span className="loading loading-spinner loading-lg text-primary" />
+        )}
+        {!hasNextPage && allShibas.length > 0 && (
+          <span className="text-base-content/50">No more shibas!</span>
+        )}
       </div>
     </>
   );

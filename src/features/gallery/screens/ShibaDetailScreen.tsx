@@ -5,6 +5,8 @@ interface ShibaDetailScreenProps {
   allShibas: Array<{
     id: number;
     imageRef: string;
+    imageWidth: number | null;
+    imageHeight: number | null;
     createdAt: string;
     userName: string | null;
     avatarUrl: string | null;
