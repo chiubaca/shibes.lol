@@ -7,6 +7,8 @@ interface HomeScreenProps {
   latestShibas: Array<{
     id: number;
     imageRef: string;
+    imageWidth: number | null;
+    imageHeight: number | null;
     createdAt: string;
     userName: string | null;
     avatarUrl: string | null;
@@ -35,7 +37,7 @@ export function HomeScreen({ latestShibas, session, submissionCount }: HomeScree
         onUploadSuccess={() => navigate({ to: "/", replace: true })}
       />
 
-      <div className="mx-auto max-w-2xl space-y-8">
+      <div className="mx-auto columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4 px-4">
         {latestShibas.map((shiba) => (
           <ShibaCard key={shiba.id} shiba={shiba} />
         ))}

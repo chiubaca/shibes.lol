@@ -18,6 +18,8 @@ const getPageData = createServerFn({ method: "GET" }).handler(async () => {
     .select({
       id: shibaSubmissionV2.id,
       imageRef: shibaSubmissionV2.imageRef,
+      imageWidth: shibaSubmissionV2.imageWidth,
+      imageHeight: shibaSubmissionV2.imageHeight,
       createdAt: shibaSubmissionV2.createdAt,
       userName: userTable.userName,
       avatarUrl: userTable.avatarUrl,
@@ -62,6 +64,7 @@ export const Route = createFileRoute("/")({
         content: "the definitive collection of shibes on the internet",
       },
     ],
+    links: [{ rel: "preload", as: "image", href: "/bg.jpg" }],
   }),
   component: Home,
 });

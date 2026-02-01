@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import { getDb } from "@/infrastructure/database/database";
 import { shibaSubmissionV2 } from "@/infrastructure/database/drizzle/schema";
 import { env } from "cloudflare:workers";
+import { readImageDimensions } from "@/lib/image-dimensions";
 
 export const Route = createFileRoute("/api/upload")({
   server: {
@@ -48,6 +49,7 @@ export const Route = createFileRoute("/api/upload")({
           const imageRef = nanoid();
           const R2_BUCKET = env.SHIBES_R2_BUCKET;
           const arrayBuffer = await file.arrayBuffer();
+          const { width, height } = await readImageDimensions(new Uint8Array(arrayBuffer), file.type);
 
           await R2_BUCKET.put(imageRef, arrayBuffer, {
             httpMetadata: {
@@ -61,6 +63,8 @@ export const Route = createFileRoute("/api/upload")({
             .values({
               imageRef,
               userId: session.user.id,
+              imageWidth: width,
+              imageHeight: height,
             })
             .returning();
 
