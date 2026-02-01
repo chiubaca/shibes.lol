@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMutation } from "@tanstack/react-query";
@@ -39,14 +40,14 @@ export function ImageUpload({ onUploadSuccess }: ImageUploadProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [pendingFile, setPendingFile] = useState<File | null>(null);
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const uploadMutation = useMutation({
     mutationFn: uploadToApi,
     onSuccess: () => {
       setPreview(null);
       setPendingFile(null);
-      setShowConfirmDialog(false);
+      const modal = document.getElementById("image_upload_modal") as HTMLDialogElement;
+      modal?.close();
       router.invalidate();
       onUploadSuccess?.();
     },
@@ -75,7 +76,8 @@ export function ImageUpload({ onUploadSuccess }: ImageUploadProps) {
       setError(errorMessage);
       setPreview(null);
       setPendingFile(null);
-      setShowConfirmDialog(false);
+      const modal = document.getElementById("image_upload_modal") as HTMLDialogElement;
+      modal?.close();
     },
   });
 
@@ -104,7 +106,8 @@ export function ImageUpload({ onUploadSuccess }: ImageUploadProps) {
     };
     reader.readAsDataURL(file);
 
-    setShowConfirmDialog(true);
+    const modal = document.getElementById("image_upload_modal") as HTMLDialogElement;
+    modal?.showModal();
   }, []);
 
   const confirmUpload = useCallback(() => {
@@ -115,7 +118,6 @@ export function ImageUpload({ onUploadSuccess }: ImageUploadProps) {
   const cancelUpload = useCallback(() => {
     setPendingFile(null);
     setPreview(null);
-    setShowConfirmDialog(false);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -135,112 +137,141 @@ export function ImageUpload({ onUploadSuccess }: ImageUploadProps) {
     <div className="w-full max-w-md mx-auto">
       <div
         {...getRootProps()}
-        className={`
-          relative border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors
-          ${isDragActive ? "border-primary bg-primary/10" : "border-base-300 hover:border-primary"}
-          ${uploadMutation.isPending ? "cursor-not-allowed opacity-50" : ""}
-        `}
+        className={clsx(
+          "relative overflow-hidden rounded-2xl border-3 border-dashed p-6 text-center cursor-pointer transition-all duration-300",
+          isDragActive && "border-orange-400 bg-orange-50 scale-105 shadow-lg shadow-orange-200",
+          !isDragActive &&
+            "border-orange-200 bg-orange-50/50 hover:border-orange-400 hover:scale-[1.02] hover:shadow-md",
+          uploadMutation.isPending && "cursor-not-allowed opacity-60 scale-100",
+        )}
       >
         <input {...getInputProps()} />
 
         {preview ? (
-          <div className="space-y-4">
-            <img src={preview} alt="Preview" className="max-w-full max-h-48 mx-auto rounded-lg" />
+          <div className="space-y-3">
+            <div className="relative inline-block">
+              <img
+                src={preview}
+                alt="Preview"
+                className="max-w-full max-h-40 mx-auto rounded-xl shadow-md"
+              />
+              <div className="absolute -top-2 -right-2 bg-orange-400 text-white text-xs px-2 py-1 rounded-full font-medium">
+                Preview ✨
+              </div>
+            </div>
             {uploadMutation.isPending && (
               <div className="space-y-2">
-                <div className="text-sm text-base-content/70">Uploading...</div>
-                <div className="w-full bg-base-300 rounded-full h-2">
-                  <div className="bg-primary h-2 rounded-full animate-pulse" />
+                <div className="text-sm text-orange-700 font-medium flex items-center justify-center gap-2">
+                  <span className="animate-bounce">⏳</span> Uploading...
+                </div>
+                <div className="w-full bg-orange-200 rounded-full h-3 overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-orange-400 to-orange-500 rounded-full animate-pulse w-2/3" />
                 </div>
               </div>
             )}
             {!uploadMutation.isPending && (
-              <div className="text-sm text-base-content/70">
-                Ready to upload: {pendingFile?.name}
+              <div className="text-sm text-orange-600 bg-orange-100 rounded-lg px-3 py-2 inline-block">
+                📁 {pendingFile?.name}
               </div>
             )}
           </div>
         ) : (
-          <div className="space-y-4">
-            <div className="text-4xl">📸</div>
+          <div className="space-y-4 py-2">
+            <div
+              className={clsx(
+                "text-5xl transition-transform duration-300",
+                isDragActive && "animate-bounce scale-110",
+              )}
+            >
+              {isDragActive ? "🐕‍🦺" : "🐾"}
+            </div>
             <div>
               {isDragActive ? (
-                <p className="text-primary font-medium">Drop the shiba image here...</p>
+                <p className="text-orange-600 font-bold text-lg animate-pulse">
+                  Drop that good boy here! 🎯
+                </p>
               ) : (
                 <div className="space-y-2">
-                  <p className="font-medium">Drag & drop a shiba image here</p>
-                  <p className="text-sm text-base-content/70">or click to select</p>
+                  <p className="font-bold text-orange-700 text-lg">Share your shibe! 📸</p>
+                  <p className="text-sm text-orange-500">Drag & drop or click to select</p>
                 </div>
               )}
             </div>
-            <div className="text-xs text-base-content/50">
-              Supports: JPEG, PNG, GIF, WebP (max 5MB)
+            <div className="flex items-center justify-center gap-2 text-xs text-orange-400 bg-orange-100 rounded-full px-4 py-1.5 inline-block">
+              <span>📋</span>
+              <span>JPEG, PNG, GIF, WebP up to 5MB</span>
             </div>
           </div>
         )}
       </div>
 
       {error && (
-        <div className="mt-4 p-3 bg-error/10 border border-error/30 rounded-lg">
-          <p className="text-error text-sm">{error}</p>
+        <div className="mt-4 p-4 bg-red-50 border-2 border-red-200 rounded-xl animate-shake">
+          <div className="flex items-center gap-2">
+            <span className="text-xl">😿</span>
+            <p className="text-red-600 font-medium">{error}</p>
+          </div>
         </div>
       )}
 
       {uploadMutation.isSuccess && !error && (
-        <div className="mt-4 p-3 bg-success/10 border border-success/30 rounded-lg">
-          <p className="success text-sm">🎉 Shiba uploaded successfully!</p>
-        </div>
-      )}
-
-      {/* Confirmation Dialog */}
-      {showConfirmDialog && !uploadMutation.isPending && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-base-100 rounded-lg p-6 max-w-sm w-full space-y-4">
-            <div className="text-center">
-              <h3 className="text-lg font-semibold mb-2">Confirm Shiba Upload</h3>
-              <div className="space-y-2">
-                {preview && (
-                  <img
-                    src={preview}
-                    alt="Preview"
-                    className="max-w-full max-h-32 mx-auto rounded-lg"
-                  />
-                )}
-                <p className="text-sm text-base-content/70">File: {pendingFile?.name}</p>
-                <p className="text-sm text-base-content/70">
-                  Size: {pendingFile ? (pendingFile.size / 1024 / 1024).toFixed(2) : "0"} MB
-                </p>
-                <p className="text-sm text-base-content/60">
-                  Are you sure you want to upload this shiba image?
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <button
-                onClick={cancelUpload}
-                className="flex-1 px-4 py-2 btn btn-outline"
-                disabled={uploadMutation.isPending}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={confirmUpload}
-                className="flex-1 px-4 py-2 btn btn-primary"
-                disabled={uploadMutation.isPending}
-              >
-                {uploadMutation.isPending ? (
-                  <>
-                    <span className="loading loading-spinner loading-sm" />
-                    Uploading...
-                  </>
-                ) : (
-                  "Upload Shiba 🐕"
-                )}
-              </button>
-            </div>
+        <div className="mt-4 p-4 bg-green-50 border-2 border-green-200 rounded-xl animate-bounce">
+          <div className="flex items-center gap-2">
+            <p className="text-green-600 font-medium text-center w-full">
+              🎉 great success! thanks for sharing! 🫶🏼
+            </p>
           </div>
         </div>
       )}
+
+      <dialog id="image_upload_modal" className="modal">
+        <div className="modal-box w-11/12 max-w-sm">
+          <div className="text-center space-y-3">
+            <h3 className="text-xl font-bold">Ready to share?</h3>
+            <div className="space-y-2 bg-base-200 rounded-xl p-4">
+              {preview && (
+                <img
+                  src={preview}
+                  alt="Preview"
+                  className="max-w-full max-h-36 mx-auto rounded-lg shadow-sm"
+                />
+              )}
+              <p className="text-sm font-medium">{pendingFile?.name}</p>
+              <p className="text-xs opacity-50">
+                {pendingFile ? `${(pendingFile.size / 1024 / 1024).toFixed(2)} MB` : "0 MB"}
+              </p>
+            </div>
+          </div>
+          <div className="modal-action mt-4">
+            <form method="dialog" className="flex gap-3 w-full">
+              <button
+                onClick={cancelUpload}
+                className="flex-1 btn btn-outline"
+                disabled={uploadMutation.isPending}
+              >
+                Maybe later 😔
+              </button>
+              <button
+                onClick={confirmUpload}
+                className="flex-1 btn bg-orange-400 hover:bg-orange-500 text-white border-none"
+                disabled={uploadMutation.isPending}
+              >
+                {uploadMutation.isPending ? (
+                  <span className="flex items-center gap-2">
+                    <span className="loading loading-spinner loading-sm" />
+                    Uploading...
+                  </span>
+                ) : (
+                  "Upload! 🚀"
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button onClick={cancelUpload}>close</button>
+        </form>
+      </dialog>
     </div>
   );
 }
