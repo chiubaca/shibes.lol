@@ -64,18 +64,45 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body className="min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-1">{children}</main>
-        <footer className="footer footer-center p-4 bg-base-200 text-base-content mt-auto">
-          <div className="flex flex-col sm:flex-row gap-4 text-sm">
-            <p>footer lol |</p>
-            <Link to="/privacy" className="link link-hover hover:text-primary transition-colors">
-              Privacy Policy
-            </Link>
-            <span className="hidden sm:inline">|</span>
-            <Link to="/terms" className="link link-hover hover:text-primary transition-colors">
-              Terms of Service
-            </Link>
-          </div>
-          <p className="text-xs opacity-60">© 2025 shibes.lol</p>
+        <footer className="footer p-10 bg-neutral text-neutral-content">
+          <nav>
+            <h6 className="footer-title lowercase">footer stuff lol</h6>
+            <a href="/terms" target="_blank" rel="noopener noreferrer" className="link link-hover">
+              terms
+            </a>
+            <a
+              href="/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link link-hover"
+            >
+              privacy
+            </a>
+            <a
+              href="https://twitter.com/ShibaEveryHour"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link link-hover"
+            >
+              @ShibaEveryHour
+            </a>
+            <a
+              href="https://twitter.com/chiubaca"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link link-hover"
+            >
+              @chiubaca
+            </a>
+            <a
+              href="https://ko-fi.com/chiubaca"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link link-hover"
+            >
+              support me | kofi
+            </a>
+          </nav>
         </footer>
         <TanStackDevtools
           config={{

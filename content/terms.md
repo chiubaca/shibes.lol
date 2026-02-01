@@ -1,8 +1,3 @@
----
-title: Terms of Service
-lastUpdated: 2025-02-01
----
-
 # Terms of Service
 
 Last updated: February 1, 2025
