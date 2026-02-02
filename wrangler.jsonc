@@ -8,6 +8,9 @@
   "observability": {
     "enabled": true,
   },
+  "triggers": {
+    "crons": ["0 * * * *"]
+  },
   "d1_databases": [
     {
       "database_name": "shibes_lol_db",

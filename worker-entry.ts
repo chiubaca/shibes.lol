@@ -8,3 +8,7 @@ export default createServerEntry({
     return handler.fetch(request);
   },
 });
+
+export async function scheduled(_event: ScheduledEvent, _env: Env, _ctx: ExecutionContext) {
+  console.log("hello world");
+}
