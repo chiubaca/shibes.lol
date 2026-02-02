@@ -12,7 +12,8 @@
       "binding": "SHIBES_LOL_DB",
       "database_name": "shibes_lol_db",
       "database_id": "3b4d9d21-3011-40be-b724-f30c361df4b3",
-      "migrations_dir": "drizzle/out",
+      "migrations_dir": "src/infrastructure/database/drizzle/out",
+      "remote": true,
     },
   ],
   "routes": [

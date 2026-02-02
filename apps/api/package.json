@@ -1,0 +1,19 @@
+{
+  "name": "@shibes.lol/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "drizzle-orm": "catalog:",
+    "hono": "catalog:"
+  },
+  "devDependencies": {
+    "@shared/database": "workspace:*",
+    "wrangler": "catalog:"
+  }
+}

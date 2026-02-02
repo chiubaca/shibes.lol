@@ -12,6 +12,9 @@ catalogs:
     drizzle-orm:
       specifier: ^0.45.1
       version: 0.45.1
+    hono:
+      specifier: ^4.11.1
+      version: 4.11.7
     wrangler:
       specifier: ^4.40.3
       version: 4.58.0
@@ -19,6 +22,22 @@ catalogs:
 importers:
 
   .: {}
+
+  apps/api:
+    dependencies:
+      drizzle-orm:
+        specifier: 'catalog:'
+        version: 0.45.1(kysely@0.28.9)
+      hono:
+        specifier: 'catalog:'
+        version: 4.11.7
+    devDependencies:
+      '@shared/database':
+        specifier: workspace:*
+        version: link:../../packages/shared/database
+      wrangler:
+        specifier: 'catalog:'
+        version: 4.58.0
 
   apps/website:
     dependencies:
@@ -2537,6 +2556,10 @@ packages:
 
   hastscript@9.0.1:
     resolution: {integrity: sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==}
+
+  hono@4.11.7:
+    resolution: {integrity: sha512-l7qMiNee7t82bH3SeyUCt9UF15EVmaBvsppY2zQtrbIhl/yzBTny+YUxsVjSjQ6gaqaeVtZmGocom8TzBlA4Yw==}
+    engines: {node: '>=16.9.0'}
 
   html-dom-parser@5.1.4:
     resolution: {integrity: sha512-UGjp7y8jSrDU2RdN2J9FDOo3X+WBu+LkS/I3TjjFW020ocZWjPvave+RKk1zeuY2sUWy5fh6zHgXHthzDGlFNQ==}
@@ -5593,6 +5616,8 @@ snapshots:
       hast-util-parse-selector: 4.0.0
       property-information: 7.1.0
       space-separated-tokens: 2.0.2
+
+  hono@4.11.7: {}
 
   html-dom-parser@5.1.4:
     dependencies:

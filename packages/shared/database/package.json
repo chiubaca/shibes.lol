@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Database access for shibes.lol monorepo",
   "author": "",
-  "main": "./index.ts",
-  "module": "./index.ts",
-  "types": "./index.ts",
   "exports": {
     "helpers": "./helpers.ts",
     "schemas": "./schemas.ts"
