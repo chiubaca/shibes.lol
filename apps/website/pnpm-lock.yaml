@@ -4,23 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-catalogs:
-  default:
-    drizzle-kit:
-      specifier: ^0.31.8
-      version: 0.31.8
-    drizzle-orm:
-      specifier: ^0.45.1
-      version: 0.45.1
-    wrangler:
-      specifier: ^4.40.3
-      version: 4.58.0
-
 importers:
 
-  .: {}
-
-  apps/website:
+  .:
     dependencies:
       '@cloudflare/vite-plugin':
         specifier: ^1.13.8
@@ -74,7 +60,7 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       drizzle-orm:
-        specifier: 'catalog:'
+        specifier: ^0.45.1
         version: 0.45.1(kysely@0.28.9)
       gray-matter:
         specifier: ^4.0.3
@@ -137,9 +123,6 @@ importers:
         specifier: ^4.1.11
         version: 4.3.5
     devDependencies:
-      '@shared/database':
-        specifier: workspace:*
-        version: link:../../packages/shared/database
       '@tailwindcss/typography':
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@4.1.18)
@@ -173,6 +156,9 @@ importers:
       daisyui:
         specifier: ^5.5.14
         version: 5.5.14
+      drizzle-kit:
+        specifier: ^0.31.8
+        version: 0.31.8
       hast-util-to-string:
         specifier: ^3.0.1
         version: 3.0.1
@@ -201,23 +187,7 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0
       wrangler:
-        specifier: 'catalog:'
-        version: 4.58.0
-
-  packages/shared/database:
-    dependencies:
-      drizzle-orm:
-        specifier: 'catalog:'
-        version: 0.45.1(kysely@0.28.9)
-    devDependencies:
-      '@types/node':
-        specifier: ^22.15.19
-        version: 22.19.3
-      drizzle-kit:
-        specifier: 'catalog:'
-        version: 0.31.8
-      wrangler:
-        specifier: 'catalog:'
+        specifier: ^4.40.3
         version: 4.58.0
 
 packages:
@@ -2556,6 +2526,9 @@ packages:
 
   html-void-elements@3.0.0:
     resolution: {integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==}
+
+  htmlparser2@10.0.0:
+    resolution: {integrity: sha512-TwAZM+zE5Tq3lrEHvOlvwgj1XLWQCtaaibSN11Q+gGBAS7Y1uZSWwXXRe4iF6OXnaq1riyQAPFOBtYc77Mxq0g==}
 
   htmlparser2@10.1.0:
     resolution: {integrity: sha512-VTZkM9GWRAtEpveh7MSF6SjjrpNVNNVJfFup7xTY3UpFtm67foy9HDVXneLtFVt4pMz5kZtgNcvCniNFb1hlEQ==}
@@ -5166,7 +5139,7 @@ snapshots:
       domhandler: 5.0.3
       domutils: 3.2.2
       encoding-sniffer: 0.2.1
-      htmlparser2: 10.1.0
+      htmlparser2: 10.0.0
       parse5: 7.3.0
       parse5-htmlparser2-tree-adapter: 7.1.0
       parse5-parser-stream: 7.1.2
@@ -5616,6 +5589,13 @@ snapshots:
       '@types/react': 19.2.7
 
   html-void-elements@3.0.0: {}
+
+  htmlparser2@10.0.0:
+    dependencies:
+      domelementtype: 2.3.0
+      domhandler: 5.0.3
+      domutils: 3.2.2
+      entities: 6.0.1
 
   htmlparser2@10.1.0:
     dependencies:

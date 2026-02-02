@@ -1,0 +1,10 @@
+packages:
+  - "apps/website"
+  - "packages/shared/database"
+
+catalog:
+  zod: ^4.1.13
+  hono: ^4.11.1
+  drizzle-orm: ^0.45.1
+  drizzle-kit: ^0.31.8
+  wrangler: ^4.40.3

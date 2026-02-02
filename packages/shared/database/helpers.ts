@@ -1,0 +1,1 @@
+export { getDb, initDatabase } from "./database";
