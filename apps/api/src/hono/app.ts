@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { getDb } from "@shared/database/helpers";
-import { shibaSubmissionV2 } from "@shared/database/schemas";
+import { getDb } from "@shared/database";
+import { shibaSubmissionV2 } from "../../../../packages/shared/database/schemas";
 import { sql } from "drizzle-orm";
 
 export const App = new Hono<{ Bindings: Env }>();

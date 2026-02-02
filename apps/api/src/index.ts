@@ -1,6 +1,7 @@
 import { WorkerEntrypoint } from "cloudflare:workers";
 import { App } from "./hono/app";
-import { initDatabase } from "@shared/database/helpers";
+import { initDatabase } from "@shared/database";
+import { postRandomShiba } from "./scheduledPoster";
 
 export default class DataService extends WorkerEntrypoint<Env> {
   constructor(ctx: ExecutionContext, env: Env) {
@@ -10,5 +11,9 @@ export default class DataService extends WorkerEntrypoint<Env> {
 
   fetch(request: Request) {
     return App.fetch(request, this.env, this.ctx);
+  }
+
+  async scheduled(_controller: ScheduledController) {
+    await postRandomShiba();
   }
 }
