@@ -4,6 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "lint": "pnpm --filter './apps/**' --filter './packages/**' lint",
+    "lint:fix": "pnpm --filter './apps/**' --filter './packages/**' lint:fix",
+    "format": "pnpm --filter './apps/**' --filter './packages/**' format",
+    "format:check": "pnpm --filter './apps/**' --filter './packages/**' format:check",
     "website:dev": "pnpm --filter @shibes.lol/website dev",
     "website:build": "pnpm --filter @shibes.lol/website build",
     "website:deploy": "pnpm --filter @shibes.lol/website deploy:prod"

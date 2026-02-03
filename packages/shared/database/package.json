@@ -8,6 +8,8 @@
     "schemas": "./schemas.ts"
   },
   "scripts": {
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "db:pull": "drizzle-kit pull --config drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config drizzle.config.ts",
     "db:generate": "drizzle-kit generate --config drizzle.config.ts",
