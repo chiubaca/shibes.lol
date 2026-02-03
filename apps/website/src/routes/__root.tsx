@@ -62,7 +62,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="min-h-screen flex flex-col">
-        Impact-Site-Verification: 3dfebbb3-db03-474d-be41-dc974eaf310a
         <Navbar />
         <main className="flex-1">{children}</main>
         <footer className="footer p-10 bg-neutral text-neutral-content">
