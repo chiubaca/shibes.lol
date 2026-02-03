@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { ShibaCard } from "@/features/gallery/components/ShibaCard";
 import { ImageUpload } from "@/features/gallery/components/ImageUpload";
+import { KofiSupport } from "@/features/gallery/components/KofiSupport";
 import { signIn } from "@/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";
 import { useShibas } from "@/features/gallery/hooks/use-shibas";
@@ -53,9 +54,11 @@ export function HomeScreen({ latestShibas, session, submissionCount }: HomeScree
       />
 
       <div className="mx-auto columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4 px-4 pt-4 pb-8">
-        {allShibas.map((shiba) => (
-          <ShibaCard key={`${shiba.id}-${shiba.imageRef}`} shiba={shiba} />
-        ))}
+        {allShibas.flatMap((shiba, index) => {
+          const shibaCard = <ShibaCard key={`${shiba.id}-${shiba.imageRef}`} shiba={shiba} />;
+          const shouldShowKofi = (index + 1) % 50 === 0;
+          return shouldShowKofi ? [shibaCard, <KofiSupport key={`kofi-${index}`} />] : [shibaCard];
+        })}
       </div>
 
       <div ref={ref} className="flex justify-center pb-8">
