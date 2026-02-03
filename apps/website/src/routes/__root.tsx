@@ -1,4 +1,4 @@
-import { HeadContent, Scripts, createRootRouteWithContext} from "@tanstack/react-router";
+import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
@@ -62,6 +62,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="min-h-screen flex flex-col">
+        Impact-Site-Verification: 3dfebbb3-db03-474d-be41-dc974eaf310a
         <Navbar />
         <main className="flex-1">{children}</main>
         <footer className="footer p-10 bg-neutral text-neutral-content">
