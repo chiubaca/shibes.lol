@@ -56,7 +56,7 @@ export function HomeScreen({ latestShibas, session, submissionCount }: HomeScree
       <div className="mx-auto columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4 px-4 pt-4 pb-8">
         {allShibas.flatMap((shiba, index) => {
           const shibaCard = <ShibaCard key={`${shiba.id}-${shiba.imageRef}`} shiba={shiba} />;
-          const shouldShowKofi = (index + 1) % 50 === 0;
+          const shouldShowKofi = (index + 1) % 25 === 0;
           return shouldShowKofi ? [shibaCard, <KofiSupport key={`kofi-${index}`} />] : [shibaCard];
         })}
       </div>
